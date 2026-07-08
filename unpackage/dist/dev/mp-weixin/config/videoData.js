@@ -15,7 +15,7 @@ const videoData = {
     {
       id: 1,
       title: "Letter of the Day 原版",
-      cover: "/static/covers/LetteroftheDay.jpg",
+      cover: "https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay.jpg",
       // 封面图路径
       episodeCount: 26,
       categoryId: "l0",
@@ -182,7 +182,7 @@ const videoData = {
     {
       id: 2,
       title: "天线宝宝",
-      cover: "/static/covers/txbb.jpeg",
+      cover: "https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/txbb.jpeg",
       episodeCount: 22,
       categoryId: "l0",
       episodes: [
@@ -323,7 +323,7 @@ const videoData = {
     {
       id: 3,
       title: "SSS儿歌",
-      cover: "/static/covers/sss.jpeg",
+      cover: "https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/sss.jpeg",
       episodeCount: 100,
       categoryId: "l0",
       episodes: [
@@ -932,7 +932,7 @@ const videoData = {
     {
       id: 4,
       title: "趣趣知知鸟",
-      cover: "/static/covers/qqzzn.jpeg",
+      cover: "https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/qqzzn.jpeg",
       episodeCount: 100,
       categoryId: "l0",
       episodes: [
