@@ -1,2 +1,145 @@
-"use strict";const e=require("../../common/vendor.js"),E=require("../../config/videoData.js"),L=require("../../utils/cosService.js"),U={__name:"video",setup(M){const a=e.ref(""),g=e.ref(""),x=e.ref(""),r=e.ref(!1),l=e.ref([]),u=e.ref(null),_=e.ref(0);async function h(i){if(!i){a.value="";return}if(i.startsWith("cloud://")){const s=await new Promise((t,d)=>{e.wx$1.cloud.getTempFileURL({fileList:[i],success:n=>{var c,f,v,o;((f=(c=n.fileList)==null?void 0:c[0])==null?void 0:f.status)===0&&n.fileList[0].tempFileURL?t(n.fileList[0].tempFileURL):d(new Error(((o=(v=n.fileList)==null?void 0:v[0])==null?void 0:o.errMsg)||"解析失败"))},fail:d})});a.value=s}else if(L.isCOSUrl(i)){const s=await L.getSignedVideoUrl(i);a.value=s}else a.value=i}function m(i,s){i.id===u.value&&a.value||(u.value=i.id,_.value=s,g.value=i.title,r.value=!0,e.index.showLoading({title:"加载中..."}),h(i.videoUrl).catch(t=>{e.index.__f__("error","at pages/video/video.vue:126","视频加载失败:",t),e.index.showModal({title:"播放失败",content:(t==null?void 0:t.message)||"视频加载失败",showCancel:!1})}).finally(()=>{e.index.hideLoading(),r.value=!1}))}e.onLoad(async i=>{const{seriesId:s,episodeId:t,title:d}=i,n=E.videoData.series.find(o=>o.id==s);if(!n||(x.value=n.title,l.value=n.episodes||[],l.value.length===0))return;const c=l.value.findIndex(o=>o.id==t),f=c>=0?c:0,v=l.value[f];u.value=v.id,_.value=f,g.value=decodeURIComponent(d||"")||v.title,r.value=!0,e.index.showLoading({title:"加载中..."}),h(v.videoUrl).catch(o=>{e.index.__f__("error","at pages/video/video.vue:162","视频加载失败:",o),e.index.showModal({title:"播放失败",content:(o==null?void 0:o.message)||"视频加载失败",showCancel:!1})}).finally(()=>{e.index.hideLoading(),r.value=!1}),setTimeout(()=>{e.index.createVideoContext("myVideo")},200)});function p(i){e.index.__f__("error","at pages/video/video.vue:181","视频播放错误:",i),e.index.showModal({title:"播放失败",content:"视频加载失败，请检查网络或视频地址是否有效",showCancel:!1})}function w(i){}function I(){const i=_.value+1;i<l.value.length&&m(l.value[i],i)}function y(){e.index.navigateBack()}return(i,s)=>e.e({a:a.value},a.value?{b:a.value,c:g.value,d:e.o(p,"13"),e:e.o(w,"ff"),f:e.o(I,"50")}:{},{g:e.o(y,"6c"),h:e.t(x.value),i:e.t(_.value+1),j:e.t(l.value.length),k:e.f(l.value,(t,d,n)=>e.e({a:e.t(d+1),b:e.t(t.title),c:t.id===u.value},t.id===u.value?{}:{},{d:t.id,e:t.id===u.value?1:"",f:e.o(c=>m(t,d),t.id)}))})}},C=e._export_sfc(U,[["__scopeId","data-v-06518e47"]]);wx.createPage(C);
+"use strict";
+const common_vendor = require("../../common/vendor.js");
+const config_videoData = require("../../config/videoData.js");
+const utils_cosService = require("../../utils/cosService.js");
+const _sfc_main = {
+  __name: "video",
+  setup(__props) {
+    const videoUrl = common_vendor.ref("");
+    const videoTitle = common_vendor.ref("");
+    const seriesTitle = common_vendor.ref("");
+    const loading = common_vendor.ref(false);
+    const episodes = common_vendor.ref([]);
+    const currentEpisodeId = common_vendor.ref(null);
+    const currentEpisodeIdx = common_vendor.ref(0);
+    async function resolveAndPlay(rawUrl) {
+      if (!rawUrl) {
+        videoUrl.value = "";
+        return;
+      }
+      if (rawUrl.startsWith("cloud://")) {
+        const playUrl = await new Promise((resolve, reject) => {
+          common_vendor.wx$1.cloud.getTempFileURL({
+            fileList: [rawUrl],
+            success: (res) => {
+              var _a, _b, _c, _d;
+              if (((_b = (_a = res.fileList) == null ? void 0 : _a[0]) == null ? void 0 : _b.status) === 0 && res.fileList[0].tempFileURL) {
+                resolve(res.fileList[0].tempFileURL);
+              } else {
+                reject(new Error(((_d = (_c = res.fileList) == null ? void 0 : _c[0]) == null ? void 0 : _d.errMsg) || "解析失败"));
+              }
+            },
+            fail: reject
+          });
+        });
+        videoUrl.value = playUrl;
+      } else if (utils_cosService.isCOSUrl(rawUrl)) {
+        const signedUrl = await utils_cosService.getSignedVideoUrl(rawUrl);
+        videoUrl.value = signedUrl;
+      } else {
+        videoUrl.value = rawUrl;
+      }
+    }
+    function switchEpisode(ep, index) {
+      if (ep.id === currentEpisodeId.value && videoUrl.value)
+        return;
+      currentEpisodeId.value = ep.id;
+      currentEpisodeIdx.value = index;
+      videoTitle.value = ep.title;
+      loading.value = true;
+      common_vendor.index.showLoading({ title: "加载中..." });
+      resolveAndPlay(ep.videoUrl).catch((err) => {
+        common_vendor.index.__f__("error", "at pages/video/video.vue:126", "视频加载失败:", err);
+        common_vendor.index.showModal({
+          title: "播放失败",
+          content: (err == null ? void 0 : err.message) || "视频加载失败",
+          showCancel: false
+        });
+      }).finally(() => {
+        common_vendor.index.hideLoading();
+        loading.value = false;
+      });
+    }
+    common_vendor.onLoad(async (options) => {
+      const { seriesId, episodeId, title } = options;
+      const series = config_videoData.videoData.series.find((s) => s.id == seriesId);
+      if (!series)
+        return;
+      seriesTitle.value = series.title;
+      episodes.value = series.episodes || [];
+      if (episodes.value.length === 0)
+        return;
+      const targetIdx = episodes.value.findIndex((e) => e.id == episodeId);
+      const startIdx = targetIdx >= 0 ? targetIdx : 0;
+      const startEp = episodes.value[startIdx];
+      currentEpisodeId.value = startEp.id;
+      currentEpisodeIdx.value = startIdx;
+      videoTitle.value = decodeURIComponent(title || "") || startEp.title;
+      loading.value = true;
+      common_vendor.index.showLoading({ title: "加载中..." });
+      resolveAndPlay(startEp.videoUrl).catch((err) => {
+        common_vendor.index.__f__("error", "at pages/video/video.vue:162", "视频加载失败:", err);
+        common_vendor.index.showModal({
+          title: "播放失败",
+          content: (err == null ? void 0 : err.message) || "视频加载失败",
+          showCancel: false
+        });
+      }).finally(() => {
+        common_vendor.index.hideLoading();
+        loading.value = false;
+      });
+      setTimeout(() => {
+        common_vendor.index.createVideoContext("myVideo");
+      }, 200);
+    });
+    function onVideoError(e) {
+      common_vendor.index.__f__("error", "at pages/video/video.vue:181", "视频播放错误:", e);
+      common_vendor.index.showModal({
+        title: "播放失败",
+        content: "视频加载失败，请检查网络或视频地址是否有效",
+        showCancel: false
+      });
+    }
+    function onTimeUpdate(e) {
+    }
+    function onVideoEnded() {
+      const nextIdx = currentEpisodeIdx.value + 1;
+      if (nextIdx < episodes.value.length) {
+        switchEpisode(episodes.value[nextIdx], nextIdx);
+      }
+    }
+    function goBack() {
+      common_vendor.index.navigateBack();
+    }
+    return (_ctx, _cache) => {
+      return common_vendor.e({
+        a: videoUrl.value
+      }, videoUrl.value ? {
+        b: videoUrl.value,
+        c: videoTitle.value,
+        d: common_vendor.o(onVideoError, "13"),
+        e: common_vendor.o(onTimeUpdate, "ff"),
+        f: common_vendor.o(onVideoEnded, "50")
+      } : {}, {
+        g: common_vendor.o(goBack, "6c"),
+        h: common_vendor.t(seriesTitle.value),
+        i: common_vendor.t(currentEpisodeIdx.value + 1),
+        j: common_vendor.t(episodes.value.length),
+        k: common_vendor.f(episodes.value, (ep, index, i0) => {
+          return common_vendor.e({
+            a: common_vendor.t(index + 1),
+            b: common_vendor.t(ep.title),
+            c: ep.id === currentEpisodeId.value
+          }, ep.id === currentEpisodeId.value ? {} : {}, {
+            d: ep.id,
+            e: ep.id === currentEpisodeId.value ? 1 : "",
+            f: common_vendor.o(($event) => switchEpisode(ep, index), ep.id)
+          });
+        })
+      });
+    };
+  }
+};
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-06518e47"]]);
+wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/video/video.js.map
