@@ -1,0 +1,9 @@
+{
+  "name": "kids-video-app",
+  "version": "1.0.0",
+  "description": "儿童英语视频学习应用",
+  "private": true,
+  "dependencies": {
+    "cos-wx-sdk-v5": "^1.4.0"
+  }
+}

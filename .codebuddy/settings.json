@@ -1,0 +1,13 @@
+{
+  "models": [
+    {
+      "id": "mimo-v2.5-pro",
+      "name": "mimo-v2.5-pro",
+      "vendor": "MiMo",
+      "apiKey": "tp-clqrdmctroozm9ff5zwixvd0t2w9a231mcy6x8xa7v00kdqo",
+      "url": "https://token-plan-cn.xiaomimimo.com/v1",
+      "supportsToolCall": true,
+      "supportsImages": false
+    }
+  ]
+}
