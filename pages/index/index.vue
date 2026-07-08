@@ -26,7 +26,7 @@
     <scroll-view scroll-x class="category-scroll" :show-scrollbar="false">
       <view class="category-list">
         <view
-          v-for="(cat, index) in categories"
+          v-for="cat in categories"
           :key="cat.id"
           class="category-item"
           :class="{ active: currentCategory === cat.id }"
@@ -47,7 +47,11 @@
           @click="openSeries(item)"
         >
           <view class="card-cover-wrap">
-            <image class="card-cover" :src="item.cover" mode="aspectFill" />
+            <image
+              class="card-cover"
+              :src="getCoverUrl(item.cover)"
+              mode="aspectFill"
+            />
             <view class="episode-badge">{{ item.episodeCount }}集</view>
           </view>
           <view class="card-title">{{ item.title }}</view>
@@ -63,6 +67,7 @@
 import { ref, computed } from 'vue'
 import { onReady } from '@dcloudio/uni-app'
 import videoData from '@/config/videoData.js'
+import { isCOSUrl, getSignedVideoUrl } from '@/utils/cosService.js'
 
 const statusBarHeight = ref(44)
 const categories = ref(videoData.categories)
@@ -70,6 +75,7 @@ const allSeries = ref(videoData.series)
 const currentCategory = ref('l0')
 const isLogin = ref(false)
 const userInfo = ref({})
+const resolvedCovers = ref({}) // 已解析的封面 URL 缓存
 
 // 读取 App 全局登录状态
 const app = getApp()
@@ -81,11 +87,53 @@ if (app.globalData && app.globalData.isLogin) {
 onReady(() => {
   const systemInfo = uni.getSystemInfoSync()
   statusBarHeight.value = systemInfo.statusBarHeight || 44
+  // 页面就绪后解析所有封面
+  resolveAllCovers()
 })
+
+/** 解析所有系列的封面图 */
+function resolveAllCovers () {
+  allSeries.value.forEach((s) => {
+    if (!s.cover) return
+    const url = s.cover
+    // 已缓存则跳过
+    if (resolvedCovers.value[url]) return
+    // 普通 HTTPS 直链直接使用
+    if (!url.startsWith('cloud://') && !isCOSUrl(url)) {
+      resolvedCovers.value[url] = url
+      return
+    }
+    // cloud:// → 微信云存储解析
+    if (url.startsWith('cloud://')) {
+      wx.cloud.getTempFileURL({
+        fileList: [url],
+        success: (res) => {
+          if (res.fileList?.[0]?.tempFileURL) {
+            resolvedCovers.value[url] = res.fileList[0].tempFileURL
+          }
+        },
+        fail: () => { },
+      })
+      return
+    }
+    // COS 私有桶直链 → COS SDK 签名
+    if (isCOSUrl(url)) {
+      getSignedVideoUrl(url).then((signed) => {
+        resolvedCovers.value[url] = signed
+      }).catch(() => { })
+    }
+  })
+}
+
+/** 获取封面 URL（优先读缓存） */
+function getCoverUrl (url) {
+  if (!url) return ''
+  return resolvedCovers.value[url] || url
+}
 
 const filteredSeries = computed(() => {
   if (currentCategory.value === 'setting') return []
-  return allSeries.value.filter(s => s.categoryId === currentCategory.value)
+  return allSeries.value.filter((s) => s.categoryId === currentCategory.value)
 })
 
 function switchCategory (catId) {

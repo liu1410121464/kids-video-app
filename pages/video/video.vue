@@ -15,6 +15,7 @@
         :show-center-play-btn="true"
         :enable-progress-gesture="true"
         object-fit="contain"
+        :enable-casting="true"
         @error="onVideoError"
         @timeupdate="onTimeUpdate"
         @ended="onVideoEnded"
@@ -27,9 +28,14 @@
       </view>
     </view>
 
-    <!-- 系列标题 -->
+    <!-- 系列标题 + 返回按钮 -->
     <view class="series-header">
-      <text class="series-title">{{ seriesTitle }}</text>
+      <view class="series-header-left">
+        <view class="back-btn" @click="goBack">
+          <text class="back-icon">‹</text>
+        </view>
+        <text class="series-title">{{ seriesTitle }}</text>
+      </view>
       <text class="series-count"
         >{{ currentEpisodeIdx + 1 }} / {{ episodes.length }} 集</text
       >
@@ -191,7 +197,10 @@ function onVideoEnded () {
     switchEpisode(episodes.value[nextIdx], nextIdx)
   }
 }
-</script>
+/** 返回首页 */
+function goBack () {
+  uni.navigateBack()
+}</script>
 
 <style lang="scss" scoped>
 .container {
@@ -238,15 +247,49 @@ function onVideoEnded () {
   padding: 24rpx 30rpx;
   border-bottom: 2rpx solid #f0f0f0;
 
-  .series-title {
-    font-size: 32rpx;
-    font-weight: 600;
-    color: #333;
+  .series-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+    min-width: 0;
+    flex: 1;
+
+    .back-btn {
+      width: 56rpx;
+      height: 56rpx;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      &:active {
+        background-color: #ddd;
+      }
+
+      .back-icon {
+        font-size: 40rpx;
+        color: #333;
+        line-height: 1;
+      }
+    }
+
+    .series-title {
+      font-size: 32rpx;
+      font-weight: 600;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .series-count {
     font-size: 26rpx;
     color: #999;
+    flex-shrink: 0;
+    margin-left: 16rpx;
   }
 }
 

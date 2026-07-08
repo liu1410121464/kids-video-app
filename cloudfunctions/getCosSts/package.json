@@ -1,0 +1,10 @@
+{
+  "name": "getCosSts",
+  "version": "1.0.0",
+  "description": "获取 COS 临时密钥",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest",
+    "cos-nodejs-sdk-v5": "^2.11.15"
+  }
+}

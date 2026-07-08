@@ -18,7 +18,8 @@
         "modules" : {
             "VideoPlayer" : {},
             "Bluetooth" : {},
-            "Clipboard" : {}
+            "Clipboard" : {},
+            "Casting" : {}
         },
         "distribute" : {
             "android" : {
