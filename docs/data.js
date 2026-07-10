@@ -15,36 +15,167 @@ const VIDEO_DATA = {
     {
       id: 1,
       title: 'Letter of the Day 原版',
-      cover: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay.jpg',
+      cover:
+        'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay.jpg',
       episodeCount: 26,
       categoryId: 'l0',
       episodes: [
-        { id: 1, title: '1、Letter Of The Day A', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/A.mp4' },
-        { id: 2, title: '2、Letter Of The Day B', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/B.mp4' },
-        { id: 3, title: '3、Letter Of The Day C', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/C.mp4' },
-        { id: 4, title: '4、Letter Of The Day D', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/D.mp4' },
-        { id: 5, title: '5、Letter Of The Day E', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/E.mp4' },
-        { id: 6, title: '6、Letter Of The Day F', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/F.mp4' },
-        { id: 7, title: '7、Letter Of The Day G', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/G.mp4' },
-        { id: 8, title: '8、Letter Of The Day H', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/H.mp4' },
-        { id: 9, title: '9、Letter Of The Day I', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/I.mp4' },
-        { id: 10, title: '10、Letter Of The Day J', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/J.mp4' },
-        { id: 11, title: '11、Letter Of The Day K', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/K.mp4' },
-        { id: 12, title: '12、Letter Of The Day L', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/L.mp4' },
-        { id: 13, title: '13、Letter Of The Day M', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/M.mp4' },
-        { id: 14, title: '14、Letter Of The Day N', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/N.mp4' },
-        { id: 15, title: '15、Letter Of The Day O', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/O.mp4' },
-        { id: 16, title: '16、Letter Of The Day P', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/P.mp4' },
-        { id: 17, title: '17、Letter Of The Day Q', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Q.mp4' },
-        { id: 18, title: '18、Letter Of The Day R', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/R.mp4' },
-        { id: 19, title: '19、Letter Of The Day S', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/S.mp4' },
-        { id: 20, title: '20、Letter Of The Day T', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/T.mp4' },
-        { id: 21, title: '21、Letter Of The Day U', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/U.mp4' },
-        { id: 22, title: '22、Letter Of The Day V', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/V.mp4' },
-        { id: 23, title: '23、Letter Of The Day W', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/W.mp4' },
-        { id: 24, title: '24、Letter Of The Day X', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/X.mp4' },
-        { id: 25, title: '25、Letter Of The Day Y', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Y.mp4' },
-        { id: 26, title: '26、Letter Of The Day Z', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Z.mp4' },
+        {
+          id: 1,
+          title: '1、Letter Of The Day A',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/A.mp4',
+        },
+        {
+          id: 2,
+          title: '2、Letter Of The Day B',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/B.mp4',
+        },
+        {
+          id: 3,
+          title: '3、Letter Of The Day C',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/C.mp4',
+        },
+        {
+          id: 4,
+          title: '4、Letter Of The Day D',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/D.mp4',
+        },
+        {
+          id: 5,
+          title: '5、Letter Of The Day E',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/E.mp4',
+        },
+        {
+          id: 6,
+          title: '6、Letter Of The Day F',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/F.mp4',
+        },
+        {
+          id: 7,
+          title: '7、Letter Of The Day G',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/G.mp4',
+        },
+        {
+          id: 8,
+          title: '8、Letter Of The Day H',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/H.mp4',
+        },
+        {
+          id: 9,
+          title: '9、Letter Of The Day I',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/I.mp4',
+        },
+        {
+          id: 10,
+          title: '10、Letter Of The Day J',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/J.mp4',
+        },
+        {
+          id: 11,
+          title: '11、Letter Of The Day K',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/K.mp4',
+        },
+        {
+          id: 12,
+          title: '12、Letter Of The Day L',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/L.mp4',
+        },
+        {
+          id: 13,
+          title: '13、Letter Of The Day M',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/M.mp4',
+        },
+        {
+          id: 14,
+          title: '14、Letter Of The Day N',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/N.mp4',
+        },
+        {
+          id: 15,
+          title: '15、Letter Of The Day O',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/O.mp4',
+        },
+        {
+          id: 16,
+          title: '16、Letter Of The Day P',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/P.mp4',
+        },
+        {
+          id: 17,
+          title: '17、Letter Of The Day Q',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Q.mp4',
+        },
+        {
+          id: 18,
+          title: '18、Letter Of The Day R',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/R.mp4',
+        },
+        {
+          id: 19,
+          title: '19、Letter Of The Day S',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/S.mp4',
+        },
+        {
+          id: 20,
+          title: '20、Letter Of The Day T',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/T.mp4',
+        },
+        {
+          id: 21,
+          title: '21、Letter Of The Day U',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/U.mp4',
+        },
+        {
+          id: 22,
+          title: '22、Letter Of The Day V',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/V.mp4',
+        },
+        {
+          id: 23,
+          title: '23、Letter Of The Day W',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/W.mp4',
+        },
+        {
+          id: 24,
+          title: '24、Letter Of The Day X',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/X.mp4',
+        },
+        {
+          id: 25,
+          title: '25、Letter Of The Day Y',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Y.mp4',
+        },
+        {
+          id: 26,
+          title: '26、Letter Of The Day Z',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/LetteroftheDay/mp4/Z.mp4',
+        },
       ],
     },
     {
@@ -54,28 +185,138 @@ const VIDEO_DATA = {
       episodeCount: 22,
       categoryId: 'l0',
       episodes: [
-        { id: 1, title: '1、天线宝宝第一季-01集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-01%E9%9B%86.mp4' },
-        { id: 2, title: '2、天线宝宝第一季-02集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-02%E9%9B%86.mp4' },
-        { id: 3, title: '3、天线宝宝第一季-03集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-03%E9%9B%86.mp4' },
-        { id: 4, title: '4、天线宝宝第一季-04集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-04%E9%9B%86.mp4' },
-        { id: 5, title: '5、天线宝宝第一季-05集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-05%E9%9B%86.mp4' },
-        { id: 6, title: '6、天线宝宝第一季-06集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-06%E9%9B%86.mp4' },
-        { id: 7, title: '7、天线宝宝第一季-07集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-07%E9%9B%86.mp4' },
-        { id: 8, title: '8、天线宝宝第一季-08集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-08%E9%9B%86.mp4' },
-        { id: 9, title: '9、天线宝宝第一季-09集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-09%E9%9B%86.mp4' },
-        { id: 10, title: '10、天线宝宝第一季-10集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-10%E9%9B%86.mp4' },
-        { id: 11, title: '11、天线宝宝第一季-11集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-11%E9%9B%86.mp4' },
-        { id: 12, title: '12、天线宝宝第一季-12集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-12%E9%9B%86.mp4' },
-        { id: 13, title: '13、天线宝宝第一季-13集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-13%E9%9B%86.mp4' },
-        { id: 14, title: '14、天线宝宝第一季-14集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-14%E9%9B%86.mp4' },
-        { id: 15, title: '15、天线宝宝第一季-15集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-15%E9%9B%86.mp4' },
-        { id: 16, title: '16、天线宝宝第一季-16集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-16%E9%9B%86.mp4' },
-        { id: 17, title: '17、天线宝宝第一季-17集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-17%E9%9B%86.mp4' },
-        { id: 18, title: '18、天线宝宝第一季-18集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-18%E9%9B%86.mp4' },
-        { id: 19, title: '19、天线宝宝第一季-19集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-19%E9%9B%86.mp4' },
-        { id: 20, title: '20、天线宝宝第一季-20集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-20%E9%9B%86.mp4' },
-        { id: 21, title: '21、天线宝宝第一季-21集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-21%E9%9B%86.mp4' },
-        { id: 22, title: '22、天线宝宝第一季-22集', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-22%E9%9B%86.mp4' },
+        {
+          id: 1,
+          title: '1、天线宝宝第一季-01集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-01%E9%9B%86.mp4',
+        },
+        {
+          id: 2,
+          title: '2、天线宝宝第一季-02集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-02%E9%9B%86.mp4',
+        },
+        {
+          id: 3,
+          title: '3、天线宝宝第一季-03集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-03%E9%9B%86.mp4',
+        },
+        {
+          id: 4,
+          title: '4、天线宝宝第一季-04集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-04%E9%9B%86.mp4',
+        },
+        {
+          id: 5,
+          title: '5、天线宝宝第一季-05集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-05%E9%9B%86.mp4',
+        },
+        {
+          id: 6,
+          title: '6、天线宝宝第一季-06集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-06%E9%9B%86.mp4',
+        },
+        {
+          id: 7,
+          title: '7、天线宝宝第一季-07集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-07%E9%9B%86.mp4',
+        },
+        {
+          id: 8,
+          title: '8、天线宝宝第一季-08集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-08%E9%9B%86.mp4',
+        },
+        {
+          id: 9,
+          title: '9、天线宝宝第一季-09集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-09%E9%9B%86.mp4',
+        },
+        {
+          id: 10,
+          title: '10、天线宝宝第一季-10集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-10%E9%9B%86.mp4',
+        },
+        {
+          id: 11,
+          title: '11、天线宝宝第一季-11集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-11%E9%9B%86.mp4',
+        },
+        {
+          id: 12,
+          title: '12、天线宝宝第一季-12集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-12%E9%9B%86.mp4',
+        },
+        {
+          id: 13,
+          title: '13、天线宝宝第一季-13集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-13%E9%9B%86.mp4',
+        },
+        {
+          id: 14,
+          title: '14、天线宝宝第一季-14集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-14%E9%9B%86.mp4',
+        },
+        {
+          id: 15,
+          title: '15、天线宝宝第一季-15集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-15%E9%9B%86.mp4',
+        },
+        {
+          id: 16,
+          title: '16、天线宝宝第一季-16集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-16%E9%9B%86.mp4',
+        },
+        {
+          id: 17,
+          title: '17、天线宝宝第一季-17集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-17%E9%9B%86.mp4',
+        },
+        {
+          id: 18,
+          title: '18、天线宝宝第一季-18集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-18%E9%9B%86.mp4',
+        },
+        {
+          id: 19,
+          title: '19、天线宝宝第一季-19集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-19%E9%9B%86.mp4',
+        },
+        {
+          id: 20,
+          title: '20、天线宝宝第一季-20集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-20%E9%9B%86.mp4',
+        },
+        {
+          id: 21,
+          title: '21、天线宝宝第一季-21集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-21%E9%9B%86.mp4',
+        },
+        {
+          id: 22,
+          title: '22、天线宝宝第一季-22集',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D/%E5%A4%A9%E7%BA%BF%E5%AE%9D%E5%AE%9D%E7%AC%AC%E4%B8%80%E5%AD%A3-22%E9%9B%86.mp4',
+        },
       ],
     },
     {
@@ -85,7 +326,12 @@ const VIDEO_DATA = {
       episodeCount: 100,
       categoryId: 'l0',
       episodes: [
-        { id: 1, title: '1、Line Up', videoUrl: 'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/sss%e5%84%bf%e6%ad%8c/1_Line%20Up%20Children,s%20Song%20Finny%20the%20Shark.mp4' },
+        {
+          id: 1,
+          title: '1、Line Up',
+          videoUrl:
+            'https://cloud2-1258683316.cos.ap-shanghai.myqcloud.com/sss%e5%84%bf%e6%ad%8c/1_Line%20Up%20Children,s%20Song%20Finny%20the%20Shark.mp4',
+        },
       ],
     },
   ],

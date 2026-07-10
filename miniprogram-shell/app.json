@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "宝宝大讲堂",
+    "navigationStyle": "default",
+    "navigationBarBackgroundColor": "#a8d5ba",
+    "navigationBarTextStyle": "black"
+  },
+  "requiredPrivateInfos": [],
+  "permission": {},
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
