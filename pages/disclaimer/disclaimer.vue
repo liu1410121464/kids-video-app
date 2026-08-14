@@ -25,7 +25,8 @@
         <!-- 重要提示 -->
         <view class="notice-box">
           <text class="notice-text">
-            ⚠️ 温馨提示：本小程序中的故事、绘画、问答等内容均由智能算法自动生成，请家长陪同孩子一起使用，合理甄别内容。
+            ⚠️
+            温馨提示：本小程序中的故事、绘画、问答等内容均由智能算法自动生成，请家长陪同孩子一起使用，合理甄别内容。
           </text>
         </view>
 
@@ -33,10 +34,12 @@
         <view class="section">
           <text class="section-title">一、关于智能生成内容</text>
           <text class="section-text">
-            1. 本应用中「智能讲故事」、「智能画画」、「智能学习助手」等功能的输出内容，均由机器学习模型根据您输入的提示词自动生成。
+            1.
+            本应用中「智能讲故事」、「智能画画」、「智能学习助手」等功能的输出内容，均由机器学习模型根据您输入的提示词自动生成。
           </text>
           <text class="section-text">
-            2. 生成内容仅基于算法对输入信息的理解，不代表任何组织的观点，也不构成专业建议。
+            2.
+            生成内容仅基于算法对输入信息的理解，不代表任何组织的观点，也不构成专业建议。
           </text>
         </view>
 
@@ -44,7 +47,8 @@
         <view class="section">
           <text class="section-title">二、内容准确性说明</text>
           <text class="section-text">
-            1. 智能生成的故事、画作和回答可能存在不准确、不完整或不符合预期的情况。
+            1.
+            智能生成的故事、画作和回答可能存在不准确、不完整或不符合预期的情况。
           </text>
           <text class="section-text">
             2. 对于智能学习助手的回答，建议家长与孩子共同查阅权威资料核实。
@@ -58,13 +62,15 @@
         <view class="section">
           <text class="section-title">三、内容安全承诺</text>
           <text class="section-text">
-            1. 我们已对生成内容设置了安全过滤机制，尽量避免输出暴力、色情、违法及不适宜儿童的内容。
+            1.
+            我们已对生成内容设置了安全过滤机制，尽量避免输出暴力、色情、违法及不适宜儿童的内容。
           </text>
           <text class="section-text">
             2. 我们持续优化模型提示词，引导生成积极向上、有益于儿童成长的内容。
           </text>
           <text class="section-text">
-            3. 如您在使用过程中发现任何不适宜的内容，欢迎通过「关于我们」中的联系方式反馈，我们将及时处理。
+            3.
+            如您在使用过程中发现任何不适宜的内容，欢迎通过「关于我们」中的联系方式反馈，我们将及时处理。
           </text>
         </view>
 
@@ -85,8 +91,12 @@
           <text class="section-text">
             如发现不当内容，可通过以下渠道反馈：
           </text>
-          <text class="section-text contact">📮 邮箱：support@baobaodaketang.com</text>
-          <text class="section-text contact">🕐 处理时长：我们将在 3 个工作日内响应</text>
+          <text class="section-text contact"
+            >📮 邮箱：support@baobaodaketang.com</text
+          >
+          <text class="section-text contact"
+            >🕐 处理时长：我们将在 3 个工作日内响应</text
+          >
         </view>
 
         <view style="height: 60rpx"></view>

@@ -31,13 +31,16 @@
         <view class="section">
           <text class="section-title">二、我们收集的信息</text>
           <text class="section-text">
-            1. 您主动提交的信息：您在使用故事创作、AI绘画等功能时提交的关键词、描述文字等输入内容；您创建的角色名称和角色设置。
+            1.
+            您主动提交的信息：您在使用故事创作、AI绘画等功能时提交的关键词、描述文字等输入内容；您创建的角色名称和角色设置。
           </text>
           <text class="section-text">
-            2. 设备信息：为了保障服务的正常运行，我们可能会收集您的设备型号、操作系统版本、网络状态等基本信息。
+            2.
+            设备信息：为了保障服务的正常运行，我们可能会收集您的设备型号、操作系统版本、网络状态等基本信息。
           </text>
           <text class="section-text">
-            3. 本地存储信息：您收藏的故事、历史记录、角色信息仅保存在您的设备本地，我们不会上传这些数据。
+            3.
+            本地存储信息：您收藏的故事、历史记录、角色信息仅保存在您的设备本地，我们不会上传这些数据。
           </text>
         </view>
 
@@ -45,7 +48,8 @@
         <view class="section">
           <text class="section-title">三、信息的使用</text>
           <text class="section-text">
-            1. 您输入的创作关键词和描述仅用于向您提供对应的故事生成、绘画生成等服务。
+            1.
+            您输入的创作关键词和描述仅用于向您提供对应的故事生成、绘画生成等服务。
           </text>
           <text class="section-text">
             2. 我们不会将您的个人信息用于与提供服务无关的用途。
@@ -61,14 +65,14 @@
           <text class="section-text">
             我们不会与任何公司、组织和个人共享您的个人信息，除非存在以下情形：
           </text>
+          <text class="section-text"> 1. 获得您的明确同意； </text>
           <text class="section-text">
-            1. 获得您的明确同意；
+            2.
+            根据法律法规的规定、诉讼争议解决需要，或行政、司法等政府部门依法提出的要求；
           </text>
           <text class="section-text">
-            2. 根据法律法规的规定、诉讼争议解决需要，或行政、司法等政府部门依法提出的要求；
-          </text>
-          <text class="section-text">
-            3. 与提供基础技术服务（如云服务、AI模型调用）的合作伙伴共享必要信息，但会要求其遵守保密义务。
+            3.
+            与提供基础技术服务（如云服务、AI模型调用）的合作伙伴共享必要信息，但会要求其遵守保密义务。
           </text>
         </view>
 
@@ -76,10 +80,12 @@
         <view class="section">
           <text class="section-title">五、信息的存储与保护</text>
           <text class="section-text">
-            1. 您的收藏、历史、角色等数据存储于您的设备本地，如需清除可直接在小程序设置中清除缓存。
+            1.
+            您的收藏、历史、角色等数据存储于您的设备本地，如需清除可直接在小程序设置中清除缓存。
           </text>
           <text class="section-text">
-            2. 我们采取合理的技术措施保护您的信息安全，防止信息遭到未经授权的访问、公开披露、使用或修改。
+            2.
+            我们采取合理的技术措施保护您的信息安全，防止信息遭到未经授权的访问、公开披露、使用或修改。
           </text>
         </view>
 
@@ -108,8 +114,12 @@
           <text class="section-text">
             如您对本隐私政策有任何疑问、意见或建议，可通过以下方式与我们联系：
           </text>
-          <text class="section-text contact">📮 邮箱：support@baobaodaketang.com</text>
-          <text class="section-text contact">🕐 工作时间：周一至周五 9:00-18:00</text>
+          <text class="section-text contact"
+            >📮 邮箱：support@baobaodaketang.com</text
+          >
+          <text class="section-text contact"
+            >🕐 工作时间：周一至周五 9:00-18:00</text
+          >
           <text class="section-text">
             我们将在收到您的问题后 15 个工作日内予以回复。
           </text>
