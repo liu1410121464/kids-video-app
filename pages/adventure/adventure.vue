@@ -299,6 +299,7 @@ function saveStory () {
   align-items: center;
   justify-content: space-between;
   padding: 12rpx 30rpx 20rpx;
+  padding-right: 280rpx;
   height: 110rpx;
 }
 .nav-back {
