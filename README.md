@@ -1,21 +1,36 @@
-# 儿童英语视频学习应用
+# 宝宝大课堂 - AI 智能儿童故事启蒙小程序
 
-基于 Vue3 + Uni-App 的儿童英语视频学习应用，支持**微信小程序**和**安卓 APK** 双端。
+基于 Vue3 + Uni-App 的 AI 儿童故事生成小程序，支持**微信小程序**和**安卓 APK** 双端。
 
-## 项目结构
+## 🚀 功能特性
+
+- 📖 **AI 讲故事**：输入关键词，AI 自动生成适合孩子年龄的有趣故事
+- 🎨 **AI 画画**（即将上线）：描述想画的内容，AI 生成精美插图
+- 🤖 **AI 学习助手**（即将上线）：孩子有任何问题都可以问 AI
+- 🎲 **随机推荐**：不知道听什么故事？一键随机生成关键词
+- 💾 **故事收藏**：喜欢的故事可以保存到本地
+
+## 📁 项目结构
 
 ```
 kids-video-app/
-├── config/
-│   └── videoData.js      # 视频数据配置（分类、系列、剧集地址）
 ├── pages/
 │   ├── index/
-│   │   └── index.vue     # 首页（分类标签 + 视频卡片）
-│   └── video/
-│       └── video.vue     # 视频播放页
+│   │   └── index.vue     # 首页（功能导航）
+│   └── story/
+│       └── story.vue     # AI 讲故事页面
+├── config/
+│   └── prompts.js        # AI 提示词与配置
+├── utils/
+│   └── aiService.js      # AI API 调用封装
+├── ai-api/               # Vercel AI 代理层
+│   ├── server.js         # 本地开发服务器
+│   ├── vercel.json       # Vercel 部署配置
+│   ├── .env.example      # 环境变量示例
+│   └── api/
+│       └── story.js      # AI 讲故事接口
 ├── static/
-│   ├── covers/           # 封面图片
-│   └── videos/           # 本地视频文件（安卓APP模式）
+│   └── icons/
 ├── App.vue
 ├── main.js
 ├── pages.json
@@ -23,66 +38,61 @@ kids-video-app/
 └── README.md
 ```
 
-## 一、编译安卓 APK
+## 🔧 快速开始
 
-### 1. HBuilderX 打开项目
-用 HBuilderX 打开本项目文件夹
+### 1. 部署 AI 代理层（Vercel）
 
-### 2. 准备视频文件
-将 mp4 视频文件放入 `static/videos/` 目录，然后在 `config/videoData.js` 中配置路径：
-```js
-videoUrl: '/static/videos/视频文件名.mp4'
-```
-
-### 3. 准备应用图标
-将以下尺寸的图标放入 `static/icons/` 目录（可暂时跳过，使用默认图标）：
-- `icon-72x72.png`（hdpi）
-- `icon-96x96.png`（xhdpi）
-- `icon-144x144.png`（xxhdpi）
-- `icon-192x192.png`（xxxhdpi）
-
-### 4. 原生 APP 云打包
-HBuilderX → 发行 → 原生APP-云打包 → 选择 Android → 打包
-
-### 5. 本地离线打包（可选）
-如需自定义更多原生功能，参考 [Uni-App 离线SDK文档](https://nativesupport.dcloud.net.cn/)
-
-### 6. 安装 APK
-打包完成后将 `.apk` 文件传输到手机安装即可
-
----
-
-## 二、运行微信小程序
-
-### 1. 安装依赖
 ```bash
-npm install @vant/weapp
+cd ai-api
+npm install
+
+# 本地开发
+npm start
+
+# 部署到 Vercel
+vercel deploy
 ```
 
-### 2. 配置小程序 AppID
-打开 `manifest.json` → 微信小程序配置 → 填入你的 AppID
+**环境变量配置**（在 Vercel Dashboard 中设置）：
+```
+SENSENOVA_API_KEY=your_api_key_here
+```
 
-### 3. 配置视频地址
-在线模式需将视频上传到腾讯云 COS / 阿里云 OSS 获取直链：
+### 2. 配置小程序端
+
+打开 `utils/aiService.js`，将 `API_BASE` 改为你部署的 Vercel 域名：
+
 ```js
-videoUrl: 'https://xxx.cos.ap-guangzhou.myqcloud.com/xxx.mp4'
+const API_BASE = 'https://your-app.vercel.app'
 ```
 
-### 4. 运行
-HBuilderX → 运行 → 运行到小程序模拟器 → 微信开发者工具
+### 3. 运行小程序
 
----
+用 HBuilderX 打开项目 → 运行 → 运行到小程序模拟器 → 微信开发者工具
 
-## 关于夸克网盘资源
+## 📱 微信小程序配置
 
-**核心结论：夸克分享链接不能直接在小程序或 APP 中使用。**
+1. 打开 `manifest.json` → 微信小程序配置 → 填入你的 AppID
+2. 在微信公众平台将小程序类目设置为：**教育 - 教育信息服务**
+3. 提交审核
 
-原因：
-- 夸克有防盗链和 UA 检测
-- 分享链接可能过期
-- 需要登录态
+## 🤖 AI 模型说明
 
-**解决方案：**
-1. **本地视频（安卓APP）** — 下载视频放到 `static/videos/`，零流量离线播放
-2. **腾讯云 COS / 阿里云 OSS** — 获取标准 HTTPS 直链，小程序和 APP 通用
-3. **微信云存储** — 与小程序深度集成
+| 模型 | 用途 | 说明 |
+|------|------|------|
+| `sensenova-6.8-flash-lite` | 故事文本生成 | 快速、低成本，适合生成儿童故事 |
+| `sensenova-u1-fast` | 故事配图生成 | 生成儿童绘本风格的插图 |
+
+## 💰 成本估算
+
+- **Vercel**：免费额度每月 100 万次请求
+- **SenseNova API**：按量计费，flash-lite 非常便宜
+- **日常使用**：每月估计不到 50 元
+
+## 📋 后续规划
+
+- [ ] AI 画画功能
+- [ ] AI 学习助手
+- [ ] 故事收藏/历史记录
+- [ ] 每日推荐故事
+- [ ] 多语言支持（英语故事）

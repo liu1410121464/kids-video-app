@@ -1,10 +1,7 @@
 {
   "name": "kids-video-app",
-  "version": "1.0.0",
-  "description": "儿童英语视频学习应用",
+  "version": "2.0.0",
+  "description": "宝宝大课堂 - AI 智能儿童故事启蒙小程序",
   "private": true,
-  "dependencies": {
-    "cos-wx-sdk-v5": "^1.4.0",
-    "jimp": "^1.6.1"
-  }
+  "dependencies": {}
 }

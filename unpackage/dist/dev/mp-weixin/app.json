@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/video/video"
+    "pages/story/story"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "儿童英语视频",
+    "navigationBarTitleText": "宝宝大课堂",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f5f5f5",
+    "backgroundColor": "#FFF8F0",
     "backgroundTextStyle": "dark"
   },
   "usingComponents": {}

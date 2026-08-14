@@ -3,15 +3,15 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "儿童英语视频",
+        "navigationBarTitleText": "宝宝大课堂",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
     },
     {
-      "path": "pages/video/video",
+      "path": "pages/story/story",
       "style": {
-        "navigationBarTitleText": "视频播放",
+        "navigationBarTitleText": "AI 讲故事",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
@@ -19,9 +19,9 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "儿童英语视频",
+    "navigationBarTitleText": "宝宝大课堂",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f5f5f5",
+    "backgroundColor": "#FFF8F0",
     "backgroundTextStyle": "dark"
   },
   "tabBar": null

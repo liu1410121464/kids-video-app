@@ -1,178 +1,74 @@
 <template>
   <view class="container">
-    <!-- 自定义导航栏 -->
+    <!-- 顶部导航栏 -->
     <view class="nav-bar" :style="{ paddingTop: statusBarHeight + 'px' }">
       <view class="nav-content">
-        <!-- 左侧：用户信息 / 登录 -->
-        <view class="nav-left">
-          <block v-if="isLogin">
-            <image
-              class="user-avatar"
-              :src="userInfo.avatarUrl"
-              mode="aspectFill"
-            />
-            <text class="user-name">{{ userInfo.nickName }}</text>
-          </block>
-          <view v-else class="login-btn" @click="handleLogin">
-            <text class="login-text">登录</text>
-          </view>
+        <view class="nav-logo">
+          <text class="logo-emoji">🐣</text>
+          <text class="logo-text">宝宝大课堂</text>
         </view>
-        <!-- 右侧：标题 -->
-        <view class="nav-title">Little Fox</view>
       </view>
     </view>
 
-    <!-- 分类标签 -->
-    <scroll-view scroll-x class="category-scroll" :show-scrollbar="false">
-      <view class="category-list">
-        <view
-          v-for="cat in categories"
-          :key="cat.id"
-          class="category-item"
-          :class="{ active: currentCategory === cat.id }"
-          @click="switchCategory(cat.id)"
-        >
-          {{ cat.name }}
-        </view>
+    <!-- 欢迎区域 -->
+    <view class="welcome-section">
+      <view class="welcome-card">
+        <text class="welcome-title">👋 嗨，小朋友！</text>
+        <text class="welcome-subtitle">今天想玩什么呢？</text>
       </view>
-    </scroll-view>
+    </view>
 
-    <!-- 视频卡片网格 -->
-    <scroll-view scroll-y class="video-grid-scroll" :show-scrollbar="false">
-      <view class="video-grid">
-        <view
-          v-for="item in filteredSeries"
-          :key="item.id"
-          class="video-card"
-          @click="openSeries(item)"
-        >
-          <view class="card-cover-wrap">
-            <image
-              class="card-cover"
-              :src="getCoverUrl(item.cover)"
-              mode="aspectFill"
-            />
-            <view class="episode-badge">{{ item.episodeCount }}集</view>
-          </view>
-          <view class="card-title">{{ item.title }}</view>
+    <!-- 功能卡片 -->
+    <view class="feature-section">
+      <view class="feature-card feature-main" @click="goStory">
+        <view class="feature-icon">📖</view>
+        <view class="feature-info">
+          <text class="feature-title">AI 讲故事</text>
+          <text class="feature-desc">输入关键词，AI 为你讲一个精彩的故事</text>
         </view>
+        <view class="feature-arrow">→</view>
       </view>
-      <!-- 底部占位 -->
-      <view style="height: 40rpx"></view>
-    </scroll-view>
+
+      <view class="feature-card feature-coming">
+        <view class="feature-icon">🎨</view>
+        <view class="feature-info">
+          <text class="feature-title">AI 画画</text>
+          <text class="feature-desc">说出你想画的，AI 帮你画出来</text>
+        </view>
+        <view class="coming-badge">即将上线</view>
+      </view>
+
+      <view class="feature-card feature-coming">
+        <view class="feature-icon">🤖</view>
+        <view class="feature-info">
+          <text class="feature-title">AI 学习助手</text>
+          <text class="feature-desc">有问题就问 AI，它什么都知道</text>
+        </view>
+        <view class="coming-badge">即将上线</view>
+      </view>
+    </view>
+
+    <!-- 底部提示 -->
+    <view class="footer-tip">
+      <text class="tip-text">✨ 每天一个 AI 故事，陪伴宝宝快乐成长</text>
+    </view>
   </view>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { onReady } from '@dcloudio/uni-app'
-import videoData from '@/config/videoData.js'
-import { isCOSUrl, getSignedVideoUrl } from '@/utils/cosService.js'
 
 const statusBarHeight = ref(44)
-const categories = ref(videoData.categories)
-const allSeries = ref(videoData.series)
-const currentCategory = ref('l0')
-const isLogin = ref(false)
-const userInfo = ref({})
-const resolvedCovers = ref({}) // 已解析的封面 URL 缓存
-
-// 读取 App 全局登录状态
-const app = getApp()
-if (app.globalData && app.globalData.isLogin) {
-  isLogin.value = true
-  userInfo.value = app.globalData.userInfo
-}
 
 onReady(() => {
   const systemInfo = uni.getSystemInfoSync()
   statusBarHeight.value = systemInfo.statusBarHeight || 44
-  // 页面就绪后解析所有封面
-  resolveAllCovers()
 })
 
-/** 解析所有系列的封面图 */
-function resolveAllCovers () {
-  allSeries.value.forEach((s) => {
-    if (!s.cover) return
-    const url = s.cover
-    // 已缓存则跳过
-    if (resolvedCovers.value[url]) return
-    // 普通 HTTPS 直链直接使用
-    if (!url.startsWith('cloud://') && !isCOSUrl(url)) {
-      resolvedCovers.value[url] = url
-      return
-    }
-    // cloud:// → 微信云存储解析
-    if (url.startsWith('cloud://')) {
-      wx.cloud.getTempFileURL({
-        fileList: [url],
-        success: (res) => {
-          if (res.fileList?.[0]?.tempFileURL) {
-            resolvedCovers.value[url] = res.fileList[0].tempFileURL
-          }
-        },
-        fail: () => { },
-      })
-      return
-    }
-    // COS 私有桶直链 → COS SDK 签名
-    if (isCOSUrl(url)) {
-      getSignedVideoUrl(url).then((signed) => {
-        resolvedCovers.value[url] = signed
-      }).catch(() => { })
-    }
-  })
-}
-
-/** 获取封面 URL（优先读缓存） */
-function getCoverUrl (url) {
-  if (!url) return ''
-  return resolvedCovers.value[url] || url
-}
-
-const filteredSeries = computed(() => {
-  if (currentCategory.value === 'setting') return []
-  return allSeries.value.filter((s) => s.categoryId === currentCategory.value)
-})
-
-function switchCategory (catId) {
-  if (catId === 'setting') {
-    uni.showToast({ title: '设置功能开发中', icon: 'none' })
-    return
-  }
-  currentCategory.value = catId
-}
-
-function openSeries (item) {
-  if (!item.episodes || item.episodes.length === 0) {
-    uni.showToast({ title: '该系列视频资源整理中...', icon: 'none' })
-    return
-  }
+function goStory () {
   uni.navigateTo({
-    url: `/pages/video/video?seriesId=${item.id}&episodeId=${item.episodes[0].id}&title=${encodeURIComponent(item.title)}`
-  })
-}
-
-// 用户登录
-function handleLogin () {
-  uni.getUserProfile({
-    desc: '用于展示您的头像和昵称',
-    success: (res) => {
-      const info = res.userInfo
-      userInfo.value = info
-      isLogin.value = true
-      // 存入全局状态
-      const app = getApp()
-      app.globalData.userInfo = info
-      app.globalData.isLogin = true
-      // 持久化本地缓存
-      uni.setStorageSync('userInfo', info)
-      uni.showToast({ title: '登录成功', icon: 'success' })
-    },
-    fail: (err) => {
-      console.log('用户取消登录', err)
-    }
+    url: '/pages/story/story'
   })
 }
 </script>
@@ -180,155 +76,151 @@ function handleLogin () {
 <style lang="scss" scoped>
 .container {
   min-height: 100vh;
-  background-color: #a8d5ba;
+  background: linear-gradient(180deg, #fff8f0 0%, #fff0e6 100%);
+  padding-bottom: 40rpx;
+}
+
+/* 导航栏 */
+.nav-bar {
+  background: transparent;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30rpx 20rpx;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.logo-emoji {
+  font-size: 48rpx;
+}
+
+.logo-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ff6b35;
+}
+
+/* 欢迎区域 */
+.welcome-section {
+  padding: 20rpx 30rpx 30rpx;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  border-radius: 24rpx;
+  padding: 36rpx 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.3);
+}
+
+.welcome-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.welcome-subtitle {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 功能区域 */
+.feature-section {
+  padding: 0 30rpx;
   display: flex;
   flex-direction: column;
-}
-
-// 导航栏
-.nav-bar {
-  background-color: transparent;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-
-  .nav-content {
-    height: 88rpx;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 12rpx;
-      flex-shrink: 0;
-
-      .user-avatar {
-        width: 56rpx;
-        height: 56rpx;
-        border-radius: 50%;
-        border: 2rpx solid #fff;
-      }
-
-      .user-name {
-        font-size: 26rpx;
-        color: #333;
-        max-width: 160rpx;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .login-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10rpx 28rpx;
-        border-radius: 30rpx;
-        background-color: #ffc107;
-        border: 2rpx solid #ffb300;
-
-        .login-text {
-          font-size: 26rpx;
-          color: #333;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .nav-title {
-      font-size: 34rpx;
-      font-weight: bold;
-      color: #333;
-      flex-shrink: 0;
-    }
-  }
-}
-
-// 分类标签
-.category-scroll {
-  white-space: nowrap;
-  padding: 16rpx 24rpx;
-  background-color: transparent;
-
-  .category-list {
-    display: inline-flex;
-    gap: 16rpx;
-
-    .category-item {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14rpx 32rpx;
-      border-radius: 40rpx;
-      font-size: 28rpx;
-      color: #555;
-      background-color: rgba(255, 255, 255, 0.7);
-      border: 2rpx solid transparent;
-      transition: all 0.2s;
-      flex-shrink: 0;
-
-      &.active {
-        background-color: #ffc107;
-        color: #333;
-        font-weight: 600;
-        border: 2rpx solid #ffb300;
-      }
-    }
-  }
-}
-
-// 视频列表区域
-.video-grid-scroll {
-  flex: 1;
-  padding: 20rpx 24rpx;
-  height: calc(100vh - 200rpx);
-}
-
-.video-grid {
-  display: flex;
-  flex-wrap: wrap;
   gap: 20rpx;
 }
 
-.video-card {
-  width: calc(50% - 10rpx);
-  background-color: #fff;
-  border-radius: 20rpx;
-  overflow: hidden;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+.feature-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx 30rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: transform 0.2s;
+}
 
-  .card-cover-wrap {
-    position: relative;
-    width: 100%;
-    height: 240rpx;
+.feature-card:active {
+  transform: scale(0.98);
+}
 
-    .card-cover {
-      width: 100%;
-      height: 100%;
-    }
+.feature-main {
+  border: 3rpx solid #ff6b35;
+  background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);
+}
 
-    .episode-badge {
-      position: absolute;
-      top: 16rpx;
-      right: 16rpx;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      font-size: 22rpx;
-      padding: 4rpx 16rpx;
-      border-radius: 20rpx;
-    }
-  }
+.feature-coming {
+  opacity: 0.7;
+}
 
-  .card-title {
-    padding: 16rpx;
-    font-size: 26rpx;
-    color: #333;
-    text-align: center;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.feature-icon {
+  font-size: 60rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff0e6;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.feature-info {
+  flex: 1;
+}
+
+.feature-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 1.5;
+}
+
+.feature-arrow {
+  font-size: 40rpx;
+  color: #ff6b35;
+  font-weight: bold;
+}
+
+.coming-badge {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  background: #f0f0f0;
+  color: #999999;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 10rpx;
+}
+
+/* 底部提示 */
+.footer-tip {
+  padding: 40rpx 30rpx 0;
+  text-align: center;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #cccccc;
 }
 </style>
