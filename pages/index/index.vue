@@ -30,7 +30,7 @@
     </view>
 
     <!-- 我的角色 -->
-    <view class="char-section" v-if="myChar">
+    <view class="char-section" v-if="myChar" :key="'char-' + charVersion">
       <view
         class="char-card"
         :class="{ 'char-bounce': charAnimating }"
@@ -41,7 +41,9 @@
         </view>
         <view class="char-info">
           <text class="char-name">{{ myChar.name }}</text>
-          <text class="char-desc">{{ charPersonality }} · {{ charAnimal }}</text>
+          <text class="char-desc"
+            >{{ charPersonality }} · {{ charAnimal }}</text
+          >
         </view>
         <view class="char-tap-hint">
           <text class="tap-icon">👆</text>
@@ -98,13 +100,19 @@
       </view>
 
       <!-- 创建角色 -->
-      <view class="feature-card card-character" @click="goCharacter">
+      <view
+        class="feature-card card-character"
+        @click="goCharacter"
+        :key="'card-' + charVersion"
+      >
         <view class="card-glare"></view>
         <view class="card-icon-wrap icon-character">
           <text class="card-emoji">{{ myChar ? charEmoji : '⭐' }}</text>
         </view>
         <text class="card-title">{{ myChar ? myChar.name : '我的角色' }}</text>
-        <text class="card-desc">{{ myChar ? '点击查看角色' : '创建专属角色，出现在故事中' }}</text>
+        <text class="card-desc">{{
+          myChar ? '点击查看角色' : '创建专属角色，出现在故事中'
+        }}</text>
       </view>
     </view>
 
@@ -117,6 +125,7 @@
     <view class="pet-layer" v-if="myChar">
       <view
         class="pet-container"
+        :key="'pet-' + charVersion"
         :class="[petState]"
         :style="petStyle"
         @touchstart="onPetTouchStart"
@@ -174,6 +183,9 @@ const charMessages = [
   '我能画一幅画送给你！🎨',
 ]
 
+// 角色版本号，修改角色后递增，强制刷新宠物渲染
+const charVersion = ref(0)
+
 // 浮动宠物
 const petState = ref('idle')
 const petMessage = ref('')
@@ -201,8 +213,13 @@ const petMessages = [
 ]
 
 onShow(() => {
-  myChar.value = getMyCharacter()
-  if (myChar.value) startPetWandering()
+  const newChar = getMyCharacter()
+  if (JSON.stringify(newChar) !== JSON.stringify(myChar.value)) {
+    myChar.value = newChar
+    charVersion.value++
+    stopPetWandering()
+    if (myChar.value) startPetWandering()
+  }
 })
 
 onHide(() => {
@@ -461,11 +478,21 @@ function goHistory () {
 }
 
 @keyframes charBounce {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.08); }
-  50% { transform: scale(0.95); }
-  70% { transform: scale(1.03); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.08);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .char-avatar {
@@ -514,8 +541,15 @@ function goHistory () {
 }
 
 @keyframes hintPulse {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.15); opacity: 1; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
 }
 
 .tap-icon {
@@ -748,21 +782,40 @@ function goHistory () {
 }
 
 @keyframes petIdle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8rpx); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8rpx);
+  }
 }
 
 @keyframes petWalk {
-  0% { transform: translateX(-6rpx) rotate(-5deg); }
-  100% { transform: translateX(6rpx) rotate(5deg); }
+  0% {
+    transform: translateX(-6rpx) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(6rpx) rotate(5deg);
+  }
 }
 
 @keyframes petHappy {
-  0% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.15) rotate(-10deg); }
-  50% { transform: scale(1.15) rotate(10deg); }
-  75% { transform: scale(1.15) rotate(-5deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.15) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.15) rotate(10deg);
+  }
+  75% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 .pet-body {
@@ -807,8 +860,14 @@ function goHistory () {
 }
 
 @keyframes petBubbleIn {
-  from { opacity: 0; transform: translateX(-50%) translateY(8rpx) scale(0.8); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8rpx) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
 }
 
 .pet-bubble-text {
