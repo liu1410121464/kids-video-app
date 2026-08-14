@@ -121,6 +121,15 @@
       <text class="tip-text">✨ 每天一个好故事，陪伴宝宝快乐成长</text>
     </view>
 
+    <!-- 底部链接 -->
+    <view class="footer-links">
+      <text class="footer-link" @click="goPrivacy">隐私政策</text>
+      <text class="link-divider">·</text>
+      <text class="footer-link" @click="goDisclaimer">内容说明</text>
+      <text class="link-divider">·</text>
+      <text class="footer-link" @click="goHistory">我的历史</text>
+    </view>
+
     <!-- 浮动宠物 -->
     <view class="pet-layer" v-if="myChar">
       <view
@@ -320,6 +329,14 @@ function goCharacter () {
 
 function goHistory () {
   uni.navigateTo({ url: '/pages/favorites/favorites?tab=history' })
+}
+
+function goPrivacy () {
+  uni.navigateTo({ url: '/pages/privacy/privacy' })
+}
+
+function goDisclaimer () {
+  uni.navigateTo({ url: '/pages/disclaimer/disclaimer' })
 }
 </script>
 
@@ -737,6 +754,31 @@ function goHistory () {
 .tip-text {
   font-size: 24rpx;
   color: #c0b2a4;
+}
+
+/* 底部链接 */
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  margin-top: 16rpx;
+  padding-bottom: 20rpx;
+}
+
+.footer-link {
+  font-size: 22rpx;
+  color: #a08e7e;
+  padding: 8rpx 12rpx;
+}
+
+.footer-link:active {
+  color: #ff6b35;
+}
+
+.link-divider {
+  font-size: 22rpx;
+  color: #d0c2b4;
 }
 
 /* 浮动宠物 */

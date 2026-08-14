@@ -80,6 +80,11 @@
         "optimization" : {
             "subPackages" : true,
             "lazyComponentLoading" : true
+        },
+        "requiredPrivateInfos" : [],
+        "permission" : {},
+        "privacyContract" : {
+            "enable" : true
         }
     },
     "mp-alipay" : {

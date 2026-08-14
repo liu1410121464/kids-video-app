@@ -63,6 +63,22 @@
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/privacy/privacy",
+      "style": {
+        "navigationBarTitleText": "隐私政策",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/disclaimer/disclaimer",
+      "style": {
+        "navigationBarTitleText": "内容说明",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {
