@@ -3,5 +3,7 @@
   "version": "2.0.0",
   "description": "宝宝大课堂 - AI 智能儿童故事启蒙小程序",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
 }

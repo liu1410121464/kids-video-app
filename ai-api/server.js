@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 
 // 代理 AI 讲故事接口
-app.post('/api/story', require('./api/story'))
+app.post('/api/story', require('../api/story'))
 
 app.listen(PORT, () => {
   console.log(`🚀 AI API 服务已启动: http://localhost:${PORT}`)

@@ -10,13 +10,7 @@
  * 3. 返回故事文本 + 图片 URL
  */
 
-// 加载环境变量（本地直接运行 serverless 函数时需要）
-try {
-  require('dotenv').config({ path: '../.env' })
-} catch (e) {
-  // Vercel 环境不需要
-}
-
+// 加载环境变量（本地开发时从 ai-api 目录启动，不需要在此加载）
 const axios = require('axios')
 
 // ⚠️ 请在 Vercel 环境变量中配置 SENSENOVA_API_KEY
