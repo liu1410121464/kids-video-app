@@ -50,7 +50,12 @@ export function chatAssistant(message, age = 6) {
  * @param {object|null} character - 专属角色 {name, animal, personality}
  * @returns {Promise<{scene, choices, round, maxRounds, finished}>}
  */
-export function startAdventure(keywords, age = 5, style = '温馨有趣', character = null) {
+export function startAdventure(
+  keywords,
+  age = 5,
+  style = '温馨有趣',
+  character = null,
+) {
   return request('/api/adventure', {
     action: 'start',
     keywords,

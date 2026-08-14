@@ -361,6 +361,30 @@ function goHistory () {
   font-weight: bold;
 }
 
+/* 故事接龙卡片 */
+.card-adventure {
+  background: linear-gradient(135deg, #f4f0ff 0%, #eae3f8 100%);
+  border: 3rpx solid #9b6dff;
+}
+
+.icon-adventure {
+  background: linear-gradient(135deg, #c9b0ff, #9b6dff);
+}
+
+/* 角色卡片 */
+.card-character {
+  background: linear-gradient(135deg, #fffbf0 0%, #fff3dc 100%);
+  border: 3rpx solid #ffd166;
+}
+
+.icon-character {
+  background: linear-gradient(135deg, #ffe082, #ffd166);
+}
+
+.card-badge-new {
+  background: linear-gradient(135deg, #9b6dff, #7b4fe0);
+}
+
 /* 底部提示 */
 .footer-tip {
   padding: 40rpx 30rpx 0;

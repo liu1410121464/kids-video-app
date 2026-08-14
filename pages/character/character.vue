@@ -14,12 +14,19 @@
     <!-- 角色展示 -->
     <view class="showcase" :style="{ background: currentThemeBg }">
       <view class="showcase-card">
-        <view class="showcase-avatar" :style="{ background: currentThemeColor }">
+        <view
+          class="showcase-avatar"
+          :style="{ background: currentThemeColor }"
+        >
           <text class="showcase-emoji">{{ currentAnimalEmoji }}</text>
         </view>
-        <text class="showcase-name" v-if="charData.name">{{ charData.name }}</text>
+        <text class="showcase-name" v-if="charData.name">{{
+          charData.name
+        }}</text>
         <text class="showcase-name placeholder" v-else>请输入名字</text>
-        <text class="showcase-type">{{ currentAnimalName }} · {{ currentPersonalityName }}</text>
+        <text class="showcase-type"
+          >{{ currentAnimalName }} · {{ currentPersonalityName }}</text
+        >
       </view>
     </view>
 
@@ -71,7 +78,10 @@
               <text class="p-name">{{ p.name }}</text>
               <text class="p-desc">{{ p.desc }}</text>
             </view>
-            <view class="p-check" :class="{ checked: charData.personalityId === p.id }">
+            <view
+              class="p-check"
+              :class="{ checked: charData.personalityId === p.id }"
+            >
               <text class="check-icon">✓</text>
             </view>
           </view>
@@ -178,7 +188,7 @@ function handleDelete () {
 <style lang="scss" scoped>
 .container {
   min-height: 100vh;
-  background: #FDF6EC;
+  background: #fdf6ec;
 }
 
 .nav-bar {
@@ -192,15 +202,28 @@ function handleDelete () {
   height: 88rpx;
 }
 .nav-back {
-  width: 64rpx; height: 64rpx;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.8);
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
 }
-.back-icon { font-size: 34rpx; color: #FF6B35; font-weight: bold; }
-.nav-title { font-size: 34rpx; font-weight: bold; color: #4A3B32; }
-.nav-placeholder { width: 64rpx; }
+.back-icon {
+  font-size: 34rpx;
+  color: #ff6b35;
+  font-weight: bold;
+}
+.nav-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #4a3b32;
+}
+.nav-placeholder {
+  width: 64rpx;
+}
 
 /* 展示区 */
 .showcase {
@@ -216,16 +239,30 @@ function handleDelete () {
   gap: 16rpx;
 }
 .showcase-avatar {
-  width: 160rpx; height: 160rpx;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
   transition: background 0.3s;
 }
-.showcase-emoji { font-size: 80rpx; }
-.showcase-name { font-size: 36rpx; font-weight: bold; color: #4A3B32; }
-.showcase-name.placeholder { color: #C0B2A4; }
-.showcase-type { font-size: 24rpx; color: #8A7A6D; }
+.showcase-emoji {
+  font-size: 80rpx;
+}
+.showcase-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #4a3b32;
+}
+.showcase-name.placeholder {
+  color: #c0b2a4;
+}
+.showcase-type {
+  font-size: 24rpx;
+  color: #8a7a6d;
+}
 
 /* 表单 */
 .form-scroll {
@@ -236,18 +273,26 @@ function handleDelete () {
   margin-bottom: 32rpx;
 }
 .section-label {
-  font-size: 26rpx; font-weight: bold; color: #7A6A5D;
-  display: block; margin-bottom: 16rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #7a6a5d;
+  display: block;
+  margin-bottom: 16rpx;
 }
 .input-wrap {
-  background: #fff; border-radius: 20rpx;
+  background: #fff;
+  border-radius: 20rpx;
   padding: 20rpx 24rpx;
-  border: 2rpx solid #F0DFCE;
+  border: 2rpx solid #f0dfce;
 }
 .name-input {
-  font-size: 30rpx; color: #4A3B32; height: 50rpx;
+  font-size: 30rpx;
+  color: #4a3b32;
+  height: 50rpx;
 }
-.ph { color: #C0B2A4; }
+.ph {
+  color: #c0b2a4;
+}
 
 /* 动物 */
 .animal-grid {
@@ -257,19 +302,26 @@ function handleDelete () {
 }
 .animal-item {
   background: #fff;
-  border: 2rpx solid #F0DFCE;
+  border: 2rpx solid #f0dfce;
   border-radius: 20rpx;
   padding: 16rpx 8rpx;
   text-align: center;
   transition: all 0.2s;
 }
 .animal-item.active {
-  border-color: #FF6B35;
-  background: #FFF0E6;
-  box-shadow: 0 4rpx 12rpx rgba(255,107,53,0.2);
+  border-color: #ff6b35;
+  background: #fff0e6;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 53, 0.2);
 }
-.animal-emoji { font-size: 44rpx; display: block; margin-bottom: 4rpx; }
-.animal-name { font-size: 20rpx; color: #4A3B32; }
+.animal-emoji {
+  font-size: 44rpx;
+  display: block;
+  margin-bottom: 4rpx;
+}
+.animal-name {
+  font-size: 20rpx;
+  color: #4a3b32;
+}
 
 /* 性格 */
 .personality-list {
@@ -282,29 +334,49 @@ function handleDelete () {
   align-items: center;
   gap: 16rpx;
   background: #fff;
-  border: 2rpx solid #F0DFCE;
+  border: 2rpx solid #f0dfce;
   border-radius: 20rpx;
   padding: 20rpx;
   transition: all 0.2s;
 }
 .personality-item.active {
-  border-color: #FF6B35;
-  background: #FFF8F0;
+  border-color: #ff6b35;
+  background: #fff8f0;
 }
-.p-emoji { font-size: 40rpx; }
-.p-info { flex: 1; }
-.p-name { font-size: 28rpx; font-weight: bold; color: #4A3B32; display: block; }
-.p-desc { font-size: 22rpx; color: #8A7A6D; }
+.p-emoji {
+  font-size: 40rpx;
+}
+.p-info {
+  flex: 1;
+}
+.p-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #4a3b32;
+  display: block;
+}
+.p-desc {
+  font-size: 22rpx;
+  color: #8a7a6d;
+}
 .p-check {
-  width: 40rpx; height: 40rpx;
+  width: 40rpx;
+  height: 40rpx;
   border-radius: 50%;
-  border: 2rpx solid #DDD;
-  display: flex; align-items: center; justify-content: center;
+  border: 2rpx solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .p-check.checked {
-  background: #FF6B35; border-color: #FF6B35;
+  background: #ff6b35;
+  border-color: #ff6b35;
 }
-.check-icon { font-size: 24rpx; color: #fff; font-weight: bold; }
+.check-icon {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: bold;
+}
 
 /* 颜色 */
 .color-row {
@@ -312,31 +384,39 @@ function handleDelete () {
   gap: 24rpx;
 }
 .color-dot {
-  width: 60rpx; height: 60rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
   border: 4rpx solid transparent;
   transition: all 0.2s;
 }
 .color-dot.active {
-  border-color: #4A3B32;
-  box-shadow: 0 0 0 6rpx rgba(74,59,50,0.1);
+  border-color: #4a3b32;
+  box-shadow: 0 0 0 6rpx rgba(74, 59, 50, 0.1);
   transform: scale(1.15);
 }
 
 /* 按钮 */
 .save-btn {
-  background: linear-gradient(135deg, #FF9E5E, #FF6B35);
+  background: linear-gradient(135deg, #ff9e5e, #ff6b35);
   border-radius: 40rpx;
   padding: 30rpx;
   text-align: center;
-  box-shadow: 0 8rpx 24rpx rgba(255,107,53,0.35);
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.35);
 }
-.save-text { font-size: 30rpx; font-weight: bold; color: #fff; }
+.save-text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #fff;
+}
 
 .delete-btn {
   margin-top: 20rpx;
   padding: 20rpx;
   text-align: center;
 }
-.delete-text { font-size: 24rpx; color: #CC9999; }
+.delete-text {
+  font-size: 24rpx;
+  color: #cc9999;
+}
 </style>

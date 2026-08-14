@@ -42,7 +42,7 @@ export const COLOR_THEMES = [
 ]
 
 // 默认角色
-export function getDefaultCharacter () {
+export function getDefaultCharacter() {
   return {
     name: '',
     animalId: 'rabbit',
@@ -53,16 +53,18 @@ export function getDefaultCharacter () {
 }
 
 // 获取当前角色（从本地存储）
-export function getMyCharacter () {
+export function getMyCharacter() {
   try {
     const data = uni.getStorageSync('myCharacter')
     if (data && data.name) return data
-  } catch (e) { /* ignore */ }
+  } catch (e) {
+    /* ignore */
+  }
   return null
 }
 
 // 保存角色
-export function saveCharacter (character) {
+export function saveCharacter(character) {
   if (!character.createdAt) {
     character.createdAt = new Date().toISOString()
   }
@@ -70,9 +72,11 @@ export function saveCharacter (character) {
 }
 
 // 获取角色的一句话描述（用于 AI 提示词）
-export function getCharacterDescription (character) {
+export function getCharacterDescription(character) {
   if (!character || !character.name) return null
-  const animal = ANIMAL_TYPES.find(a => a.id === character.animalId)
-  const personality = PERSONALITIES.find(p => p.id === character.personalityId)
+  const animal = ANIMAL_TYPES.find((a) => a.id === character.animalId)
+  const personality = PERSONALITIES.find(
+    (p) => p.id === character.personalityId,
+  )
   return `${animal ? animal.emoji + animal.name : '小动物'}《${character.name}》${personality ? '性格' + personality.name : ''}`
 }

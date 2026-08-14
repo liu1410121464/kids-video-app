@@ -29,5 +29,4 @@ app.listen(PORT, () => {
   console.log(`🎨 画画接口: POST http://localhost:${PORT}/api/draw`)
   console.log(`🤖 学习助手接口: POST http://localhost:${PORT}/api/chat`)
   console.log(`🎭 故事接龙接口: POST http://localhost:${PORT}/api/adventure`)
-  console.log(`🎭 故事接龙接口: POST http://localhost:${PORT}/api/adventure`)
 })
