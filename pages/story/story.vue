@@ -101,7 +101,11 @@
     <!-- 故事展示区域 -->
     <view class="story-section" v-show="showStory">
       <!-- 故事配图 -->
-      <view class="story-image-wrap" v-if="storyData.image" @click="previewImage">
+      <view
+        class="story-image-wrap"
+        v-if="storyData.image"
+        @click="previewImage"
+      >
         <image
           class="story-image"
           :src="storyData.image"
@@ -303,7 +307,8 @@ function previewImage () {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12rpx 30rpx 20rpx;
+  padding: 12rpx 30rpx 20rpx 30rpx;
+  padding-right: 280rpx;
   height: 110rpx;
 }
 

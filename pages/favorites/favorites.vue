@@ -225,12 +225,14 @@ function removeFavorite (index) {
   display: flex;
   gap: 16rpx;
   padding: 0 30rpx;
+  padding-right: 280rpx;
   margin-bottom: 24rpx;
+  overflow: hidden;
 }
 
 .tab-item {
-  flex: 1;
-  padding: 20rpx 0;
+  flex: 0 0 auto;
+  padding: 20rpx 32rpx;
   text-align: center;
   background: #ffffff;
   border-radius: 40rpx;
