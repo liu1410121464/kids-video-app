@@ -54,7 +54,7 @@
       </view>
 
       <!-- 开始按钮 -->
-      <view class="start-btn" @click="startAdventure">
+      <view class="start-btn" @click="handleStart">
         <text class="start-btn-text">🚀 开始冒险</text>
       </view>
     </view>
@@ -187,7 +187,7 @@ function randomKw () {
   keywords.value = words[Math.floor(Math.random() * words.length)]
 }
 
-async function startAdventure () {
+async function handleStart () {
   if (!keywords.value.trim()) {
     uni.showToast({ title: '输入故事关键词', icon: 'none' })
     return

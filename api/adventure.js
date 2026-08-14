@@ -58,13 +58,17 @@ function tryParseJSON(str) {
   // 尝试直接解析
   try {
     return JSON.parse(cleaned)
-  } catch (e) { /* 继续尝试 */ }
+  } catch (e) {
+    /* 继续尝试 */
+  }
   // 尝试提取大括号内容
   const match = cleaned.match(/\{[\s\S]*\}/)
   if (match) {
     try {
       return JSON.parse(match[0])
-    } catch (e) { /* 失败 */ }
+    } catch (e) {
+      /* 失败 */
+    }
   }
   return null
 }
@@ -86,7 +90,15 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { action, keywords, age = 5, style = '温馨有趣', character, history, choiceIndex } = req.body
+    const {
+      action,
+      keywords,
+      age = 5,
+      style = '温馨有趣',
+      character,
+      history,
+      choiceIndex,
+    } = req.body
 
     if (!API_KEY) return res.json({ code: -1, message: 'API Key 未配置' })
 
@@ -115,14 +127,22 @@ module.exports = async function handler(req, res) {
 
       const messages = [
         { role: 'system', content: sysMsg },
-        { role: 'user', content: `请用以下关键词开始一个互动故事：${keywords}` },
+        {
+          role: 'user',
+          content: `请用以下关键词开始一个互动故事：${keywords}`,
+        },
       ]
 
       const aiRes = await generateText(messages)
       const content = aiRes?.choices?.[0]?.message?.content || ''
       const parsed = tryParseJSON(content)
 
-      if (!parsed || !parsed.scene || !parsed.choices || parsed.choices.length < 2) {
+      if (
+        !parsed ||
+        !parsed.scene ||
+        !parsed.choices ||
+        parsed.choices.length < 2
+      ) {
         console.error('故事开头解析失败:', content.slice(0, 300))
         return res.json({ code: -1, message: '故事生成失败，请重试' })
       }
@@ -179,7 +199,10 @@ module.exports = async function handler(req, res) {
 
       const messages = [
         { role: 'system', content: sysMsg },
-        { role: 'user', content: `这是完整的故事历史，你必须严格延续这个故事，保持角色和情节一致：\n${historyText}\n\n孩子选择了第${choiceIndex + 1}个选项，请延续这段冒险。` },
+        {
+          role: 'user',
+          content: `这是完整的故事历史，你必须严格延续这个故事，保持角色和情节一致：\n${historyText}\n\n孩子选择了第${choiceIndex + 1}个选项，请延续这段冒险。`,
+        },
       ]
 
       const aiRes = await generateText(messages)
@@ -198,7 +221,8 @@ module.exports = async function handler(req, res) {
           choices: parsed.choices ? parsed.choices.slice(0, 3) : [],
           round: currentRound + 1,
           maxRounds: MAX_ROUNDS,
-          finished: isLastRound || !parsed.choices || parsed.choices.length === 0,
+          finished:
+            isLastRound || !parsed.choices || parsed.choices.length === 0,
         },
       })
     }
