@@ -289,12 +289,12 @@ function saveStory () {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30rpx 20rpx;
-  height: 88rpx;
+  padding: 12rpx 30rpx 20rpx;
+  height: 110rpx;
 }
 .nav-back {
-  width: 64rpx;
-  height: 64rpx;
+  width: 72rpx;
+  height: 72rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -303,9 +303,10 @@ function saveStory () {
   box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
 }
 .back-icon {
-  font-size: 34rpx;
+  font-size: 40rpx;
   color: #7b4fe0;
   font-weight: bold;
+  line-height: 1;
 }
 .nav-title {
   font-size: 34rpx;
@@ -519,7 +520,7 @@ function saveStory () {
 /* 故事场景 */
 .story-scroll {
   padding: 0 30rpx;
-  height: calc(100vh - 140rpx);
+  height: calc(100vh - 162rpx);
   box-sizing: border-box;
 }
 .round-badge {

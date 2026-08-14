@@ -188,13 +188,13 @@ function removeFavorite (index) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30rpx 20rpx;
-  height: 88rpx;
+  padding: 12rpx 30rpx 20rpx;
+  height: 110rpx;
 }
 
 .nav-back {
-  width: 64rpx;
-  height: 64rpx;
+  width: 72rpx;
+  height: 72rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,9 +204,10 @@ function removeFavorite (index) {
 }
 
 .back-icon {
-  font-size: 34rpx;
+  font-size: 40rpx;
   color: #ff6b35;
   font-weight: bold;
+  line-height: 1;
 }
 
 .nav-title {

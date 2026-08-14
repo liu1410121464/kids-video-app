@@ -215,13 +215,13 @@ function onImageError () {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30rpx 20rpx;
-  height: 88rpx;
+  padding: 12rpx 30rpx 20rpx;
+  height: 110rpx;
 }
 
 .nav-back {
-  width: 64rpx;
-  height: 64rpx;
+  width: 72rpx;
+  height: 72rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -231,9 +231,10 @@ function onImageError () {
 }
 
 .back-icon {
-  font-size: 34rpx;
+  font-size: 40rpx;
   color: #5b9dff;
   font-weight: bold;
+  line-height: 1;
 }
 
 .nav-title {
