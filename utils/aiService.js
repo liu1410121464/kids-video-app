@@ -9,9 +9,8 @@
  * 3. 本地开发时可改为 http://localhost:3000
  */
 
-// ⚠️ 本地开发用 localhost，部署后改为你的 Vercel 域名
-// 例如：https://your-app.vercel.app
-const API_BASE = 'http://localhost:3000'
+// ⚠️ 已部署到 Vercel，本地开发时可改为 http://localhost:3000
+const API_BASE = 'https://kids-video-app.vercel.app'
 
 /**
  * 生成 AI 故事
