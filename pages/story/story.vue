@@ -142,6 +142,9 @@
         <view class="action-btn action-retry" @click="resetStory">
           <text class="action-text">🔄 换一个</text>
         </view>
+        <view class="action-btn action-play" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
+          <text class="action-text">{{ isPlaying ? '⏹ 停止' : '🔊 听故事' }}</text>
+        </view>
         <view class="action-btn action-save" @click="saveStory">
           <text class="action-text">💾 保存</text>
         </view>
@@ -168,6 +171,7 @@
 import { ref, computed } from 'vue'
 import { onReady } from '@dcloudio/uni-app'
 import { generateStory } from '@/utils/aiService.js'
+import { readAloud, stop as stopTTS, getStatus } from '@/utils/ttsService.js'
 import { STORY_STYLES, AGE_GROUPS, getRandomKeywords } from '@/config/prompts.js'
 
 const statusBarHeight = ref(44)
@@ -178,6 +182,7 @@ const isLoading = ref(false)
 const showStory = ref(false)
 const storyData = ref({})
 const errorMessage = ref('')
+const isPlaying = ref(false)
 
 const storyStyles = STORY_STYLES
 const ageGroups = AGE_GROUPS
@@ -274,6 +279,21 @@ function retry () {
   if (isLoading.value) return
   errorMessage.value = ''
   handleGenerate()
+}
+
+function toggleReadAloud () {
+  const status = getStatus()
+  if (status.isSpeaking) {
+    stopTTS()
+    isPlaying.value = false
+    return
+  }
+  const text = storyData.value.story
+  if (!text) return
+  isPlaying.value = true
+  readAloud(text, () => {
+    isPlaying.value = false
+  })
 }
 
 function onImageError () {
@@ -807,6 +827,22 @@ function previewImage () {
   box-shadow: 0 4rpx 16rpx rgba(255, 177, 77, 0.3);
 }
 
+.action-play {
+  background: linear-gradient(135deg, #4caf92, #3d9b80);
+  box-shadow: 0 4rpx 16rpx rgba(76, 175, 146, 0.3);
+}
+
+.action-play.is-playing {
+  background: linear-gradient(135deg, #e74c5e, #c0392b);
+  box-shadow: 0 4rpx 16rpx rgba(231, 76, 94, 0.3);
+  animation: pulsePlay 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsePlay {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 .action-text {
   font-size: 26rpx;
   font-weight: bold;
@@ -817,7 +853,8 @@ function previewImage () {
 }
 
 .action-save .action-text,
-.action-list .action-text {
+.action-list .action-text,
+.action-play .action-text {
   color: #ffffff;
 }
 

@@ -109,6 +109,12 @@
         </view>
       </view>
 
+      <!-- 朗读按钮 -->
+      <view class="read-aloud-btn" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
+        <text class="ra-icon">{{ isPlaying ? '⏹' : '🔊' }}</text>
+        <text class="ra-text">{{ isPlaying ? '停止' : '朗读故事' }}</text>
+      </view>
+
       <!-- 选择分支 (当前轮) -->
       <view
         class="choices-section"
@@ -156,6 +162,7 @@
 import { ref, computed } from 'vue'
 import { onReady } from '@dcloudio/uni-app'
 import { startAdventure, continueAdventure } from '@/utils/aiService.js'
+import { readAloud, stop as stopTTS, getStatus } from '@/utils/ttsService.js'
 import { getMyCharacter, ANIMAL_TYPES, COLOR_THEMES } from '@/config/character.js'
 
 const statusBarHeight = ref(44)
@@ -163,6 +170,7 @@ const keywords = ref('')
 const loading = ref(false)
 const started = ref(false)
 const finished = ref(false)
+const isPlaying = ref(false)
 const currentRound = ref(1)
 const maxRounds = ref(5)
 const currentChoices = ref([])
@@ -262,6 +270,21 @@ function resetAll () {
   currentChoices.value = []
   storyHistory.value = []
   keywords.value = ''
+}
+
+function toggleReadAloud () {
+  const status = getStatus()
+  if (status.isSpeaking) {
+    stopTTS()
+    isPlaying.value = false
+    return
+  }
+  const text = storyHistory.value.map((h, i) => `第${i + 1}幕：${h.scene}`).join('\n\n')
+  if (!text) return
+  isPlaying.value = true
+  readAloud(text, () => {
+    isPlaying.value = false
+  })
 }
 
 function saveStory () {
@@ -603,6 +626,44 @@ function saveStory () {
   font-size: 22rpx;
   color: #7b4fe0;
   font-weight: 600;
+}
+
+/* 朗读按钮 */
+.read-aloud-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 20rpx;
+  margin: 16rpx 0;
+  background: linear-gradient(135deg, #4caf92, #3d9b80);
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(76, 175, 146, 0.3);
+}
+
+.read-aloud-btn:active {
+  transform: scale(0.96);
+}
+
+.read-aloud-btn.is-playing {
+  background: linear-gradient(135deg, #e74c5e, #c0392b);
+  box-shadow: 0 4rpx 16rpx rgba(231, 76, 94, 0.3);
+  animation: pulsePlay 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsePlay {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.ra-icon {
+  font-size: 30rpx;
+}
+
+.ra-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 /* 选择 */

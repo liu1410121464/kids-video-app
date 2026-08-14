@@ -38,6 +38,9 @@
 
       <!-- 操作按钮 -->
       <view class="story-actions">
+        <view class="action-btn action-play" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
+          <text class="action-text">{{ isPlaying ? '⏹ 停止' : '🔊 听故事' }}</text>
+        </view>
         <view class="action-btn action-save" @click="saveStory">
           <text class="action-text">❤️ 收藏</text>
         </view>
@@ -53,9 +56,11 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { onReady } from '@dcloudio/uni-app'
+import { readAloud, stop as stopTTS, getStatus } from '@/utils/ttsService.js'
 
 const statusBarHeight = ref(44)
 const story = ref(null)
+const isPlaying = ref(false)
 
 // 从 URL 参数获取故事数据
 onReady((options) => {
@@ -106,6 +111,21 @@ function saveStory () {
 
 function viewHistory () {
   uni.navigateTo({ url: '/pages/favorites/favorites?tab=history' })
+}
+
+function toggleReadAloud () {
+  const status = getStatus()
+  if (status.isSpeaking) {
+    stopTTS()
+    isPlaying.value = false
+    return
+  }
+  const text = story.value?.story
+  if (!text) return
+  isPlaying.value = true
+  readAloud(text, () => {
+    isPlaying.value = false
+  })
 }
 </script>
 
@@ -260,6 +280,22 @@ function viewHistory () {
 .action-list {
   background: linear-gradient(135deg, #ffd166, #ffb84d);
   box-shadow: 0 4rpx 16rpx rgba(255, 177, 77, 0.3);
+}
+
+.action-play {
+  background: linear-gradient(135deg, #4caf92, #3d9b80);
+  box-shadow: 0 4rpx 16rpx rgba(76, 175, 146, 0.3);
+}
+
+.action-play.is-playing {
+  background: linear-gradient(135deg, #e74c5e, #c0392b);
+  box-shadow: 0 4rpx 16rpx rgba(231, 76, 94, 0.3);
+  animation: pulsePlay 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsePlay {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .action-text {
