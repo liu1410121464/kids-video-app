@@ -54,8 +54,14 @@
       </view>
 
       <!-- 开始按钮 -->
-      <view class="start-btn" :class="{ disabled: loading }" @click="handleStart">
-        <text class="start-btn-text">{{ loading ? '⏳ 生成中...' : '🚀 开始冒险' }}</text>
+      <view
+        class="start-btn"
+        :class="{ disabled: loading }"
+        @click="handleStart"
+      >
+        <text class="start-btn-text">{{
+          loading ? '⏳ 生成中...' : '🚀 开始冒险'
+        }}</text>
       </view>
     </view>
 

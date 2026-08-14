@@ -48,7 +48,9 @@
 
       <!-- 生成按钮 -->
       <view class="draw-btn" :class="{ disabled: loading }" @click="handleDraw">
-        <text class="btn-text">{{ loading ? '⏳ 生成中...' : '✨ 开始画画' }}</text>
+        <text class="btn-text">{{
+          loading ? '⏳ 生成中...' : '✨ 开始画画'
+        }}</text>
       </view>
     </view>
 
@@ -69,13 +71,16 @@
 
     <!-- 展示图片 -->
     <view class="result-section" v-show="showImage">
-      <view class="result-image-wrap">
+      <view class="result-image-wrap" @click="previewImage">
         <image
           class="result-image"
           :src="imageUrl"
           mode="widthFix"
           @error="onImageError"
         />
+        <view class="image-preview-hint">
+          <text class="hint-text">🔍 点击预览</text>
+        </view>
       </view>
 
       <view class="result-prompt">
@@ -198,6 +203,16 @@ function retry () {
 
 function onImageError () {
   // 静默处理
+}
+
+function previewImage () {
+  if (!imageUrl.value) return
+  uni.previewImage({
+    urls: [imageUrl.value],
+    current: imageUrl.value,
+    indicator: 'none',
+    loop: false
+  })
 }
 </script>
 
@@ -488,6 +503,23 @@ function onImageError () {
   overflow: hidden;
   box-shadow: 0 12rpx 30rpx rgba(0, 0, 0, 0.12);
   border: 2rpx solid #e0edfb;
+  position: relative;
+}
+
+.image-preview-hint {
+  position: absolute;
+  bottom: 16rpx;
+  right: 16rpx;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 20rpx;
+  padding: 8rpx 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.hint-text {
+  font-size: 20rpx;
+  color: #ffffff;
 }
 
 .result-image {

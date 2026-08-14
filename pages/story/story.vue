@@ -73,8 +73,14 @@
       </view>
 
       <!-- 生成按钮 -->
-      <view class="generate-btn" :class="{ disabled: isLoading }" @click="handleGenerate">
-        <text class="btn-text">{{ isLoading ? '⏳ 生成中...' : '📖 开始讲故事' }}</text>
+      <view
+        class="generate-btn"
+        :class="{ disabled: isLoading }"
+        @click="handleGenerate"
+      >
+        <text class="btn-text">{{
+          isLoading ? '⏳ 生成中...' : '📖 开始讲故事'
+        }}</text>
       </view>
     </view>
 
@@ -95,7 +101,7 @@
     <!-- 故事展示区域 -->
     <view class="story-section" v-show="showStory">
       <!-- 故事配图 -->
-      <view class="story-image-wrap" v-if="storyData.image">
+      <view class="story-image-wrap" v-if="storyData.image" @click="previewImage">
         <image
           class="story-image"
           :src="storyData.image"
@@ -103,6 +109,9 @@
           @error="onImageError"
         />
         <view class="image-shine"></view>
+        <view class="image-preview-hint">
+          <text class="hint-text">🔍 点击预览</text>
+        </view>
       </view>
 
       <!-- 故事标题 -->
@@ -265,6 +274,16 @@ function retry () {
 
 function onImageError () {
   // 图片加载失败，静默处理
+}
+
+function previewImage () {
+  if (!storyData.value.image) return
+  uni.previewImage({
+    urls: [storyData.value.image],
+    current: storyData.value.image,
+    indicator: 'none',
+    loop: false
+  })
 }
 </script>
 
@@ -641,6 +660,22 @@ function onImageError () {
   overflow: hidden;
   box-shadow: 0 12rpx 30rpx rgba(0, 0, 0, 0.12);
   position: relative;
+}
+
+.image-preview-hint {
+  position: absolute;
+  bottom: 16rpx;
+  right: 16rpx;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 20rpx;
+  padding: 8rpx 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.hint-text {
+  font-size: 20rpx;
+  color: #ffffff;
 }
 
 .story-image {
