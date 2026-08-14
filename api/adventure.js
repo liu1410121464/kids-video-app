@@ -102,10 +102,15 @@ module.exports = async function handler(req, res) {
       const aiRes = await generateText(messages)
       let content = aiRes?.choices?.[0]?.message?.content || ''
 
-      // 尝试解析 JSON
+      // 尝试解析 JSON（支持 markdown 代码块包裹）
       let parsed = tryParseJSON(content)
       if (!parsed) {
-        // 如果模型没输出纯净 JSON，尝试提取
+        // 去掉 markdown 代码块标记
+        const cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()
+        parsed = tryParseJSON(cleaned)
+      }
+      if (!parsed) {
+        // 尝试提取大括号内容
         const jsonMatch = content.match(/\{[\s\S]*\}/)
         if (jsonMatch) parsed = tryParseJSON(jsonMatch[0])
       }
@@ -176,6 +181,10 @@ module.exports = async function handler(req, res) {
       let content = aiRes?.choices?.[0]?.message?.content || ''
 
       let parsed = tryParseJSON(content)
+      if (!parsed) {
+        const cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()
+        parsed = tryParseJSON(cleaned)
+      }
       if (!parsed) {
         const jsonMatch = content.match(/\{[\s\S]*\}/)
         if (jsonMatch) parsed = tryParseJSON(jsonMatch[0])
