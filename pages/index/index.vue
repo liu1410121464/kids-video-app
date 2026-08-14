@@ -112,12 +112,31 @@
     <view class="footer-tip">
       <text class="tip-text">✨ 每天一个 AI 故事，陪伴宝宝快乐成长</text>
     </view>
+
+    <!-- 浮动宠物 -->
+    <view class="pet-layer" v-if="myChar">
+      <view
+        class="pet-container"
+        :class="[petState]"
+        :style="petStyle"
+        @touchstart="onPetTouchStart"
+        @touchmove="onPetTouchMove"
+        @touchend="onPetTouchEnd"
+      >
+        <view class="pet-body" :style="{ background: charColor }">
+          <text class="pet-emoji">{{ charEmoji }}</text>
+        </view>
+        <view class="pet-bubble" v-if="petMessage">
+          <text class="pet-bubble-text">{{ petMessage }}</text>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
-import { onReady, onShow } from '@dcloudio/uni-app'
+import { onReady, onShow, onHide } from '@dcloudio/uni-app'
 import { getMyCharacter, ANIMAL_TYPES, PERSONALITIES, COLOR_THEMES } from '@/config/character.js'
 
 const statusBarHeight = ref(44)
@@ -155,14 +174,102 @@ const charMessages = [
   '我能画一幅画送给你！🎨',
 ]
 
+// 浮动宠物
+const petState = ref('idle')
+const petMessage = ref('')
+const petX = ref(40)
+const petY = ref(0)
+const petViewW = ref(375)
+const petViewH = ref(700)
+const petSize = 120
+let dragStartX = 0
+let dragStartY = 0
+let petStartX = 0
+let petStartY = 0
+let petTimer = null
+let walkTimer = null
+
+const petStyle = computed(() => ({
+  left: petX.value + 'px',
+  top: petY.value + 'px',
+}))
+
+const petMessages = [
+  '嘿嘿～👋', '啦啦啦～🎵', '好无聊呀🥱',
+  '你想去哪里？🚶', '我在这里！✨', '嗯？😊',
+  '来找我玩呀！🎮', '今天真开心！🌟',
+]
+
 onShow(() => {
   myChar.value = getMyCharacter()
+  if (myChar.value) startPetWandering()
+})
+
+onHide(() => {
+  stopPetWandering()
 })
 
 onReady(() => {
   const systemInfo = uni.getSystemInfoSync()
   statusBarHeight.value = systemInfo.statusBarHeight || 44
+  petViewW.value = systemInfo.windowWidth
+  petViewH.value = systemInfo.windowHeight
+  petX.value = petViewW.value - petSize - 30
+  petY.value = petViewH.value - petSize - 300
 })
+
+function startPetWandering () {
+  stopPetWandering()
+  walkTimer = setInterval(() => {
+    if (petState.value === 'dragging') return
+    const maxX = petViewW.value - petSize - 10
+    const maxY = petViewH.value - petSize - 150
+    const newX = Math.max(10, Math.min(maxX, 10 + Math.random() * (maxX - 10)))
+    const newY = Math.max(80, Math.min(maxY, 80 + Math.random() * (maxY - 80)))
+    petState.value = 'walking'
+    petX.value = newX
+    petY.value = newY
+    clearTimeout(petTimer)
+    petTimer = setTimeout(() => { petState.value = 'idle' }, 800)
+  }, 4000 + Math.random() * 3000)
+}
+
+function stopPetWandering () {
+  if (walkTimer) { clearInterval(walkTimer); walkTimer = null }
+  clearTimeout(petTimer)
+}
+
+function onPetTouchStart (e) {
+  stopPetWandering()
+  petState.value = 'dragging'
+  const touch = e.touches[0]
+  dragStartX = touch.clientX
+  dragStartY = touch.clientY
+  petStartX = petX.value
+  petStartY = petY.value
+}
+
+function onPetTouchMove (e) {
+  if (petState.value !== 'dragging') return
+  const touch = e.touches[0]
+  const dx = touch.clientX - dragStartX
+  const dy = touch.clientY - dragStartY
+  const maxX = petViewW.value - petSize - 10
+  const maxY = petViewH.value - petSize - 150
+  petX.value = Math.max(10, Math.min(maxX, petStartX + dx))
+  petY.value = Math.max(80, Math.min(maxY, petStartY + dy))
+}
+
+function onPetTouchEnd () {
+  if (petState.value !== 'dragging') return
+  petState.value = 'happy'
+  petMessage.value = petMessages[Math.floor(Math.random() * petMessages.length)]
+  setTimeout(() => {
+    petMessage.value = ''
+    petState.value = 'idle'
+    startPetWandering()
+  }, 1500)
+}
 
 function interactWithChar () {
   if (charAnimating.value) return
@@ -596,5 +703,117 @@ function goHistory () {
 .tip-text {
   font-size: 24rpx;
   color: #c0b2a4;
+}
+
+/* 浮动宠物 */
+.pet-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.pet-container {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  pointer-events: auto;
+  z-index: 999;
+  transition: left 0.8s ease, top 0.8s ease;
+}
+
+.pet-container.dragging {
+  transition: none;
+  z-index: 1000;
+}
+
+.pet-container.idle .pet-body {
+  animation: petIdle 2s ease-in-out infinite;
+}
+
+.pet-container.walking .pet-body {
+  animation: petWalk 0.4s ease-in-out infinite alternate;
+}
+
+.pet-container.happy .pet-body {
+  animation: petHappy 0.5s ease;
+}
+
+.pet-container.dragging .pet-body {
+  transform: scale(1.12);
+}
+
+@keyframes petIdle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+@keyframes petWalk {
+  0% { transform: translateX(-6rpx) rotate(-5deg); }
+  100% { transform: translateX(6rpx) rotate(5deg); }
+}
+
+@keyframes petHappy {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.15) rotate(-10deg); }
+  50% { transform: scale(1.15) rotate(10deg); }
+  75% { transform: scale(1.15) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.pet-body {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.pet-emoji {
+  font-size: 64rpx;
+}
+
+.pet-bubble {
+  position: absolute;
+  top: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff6b35;
+  border-radius: 20rpx;
+  padding: 8rpx 18rpx;
+  white-space: nowrap;
+  z-index: 1001;
+  animation: petBubbleIn 0.3s ease-out;
+}
+
+.pet-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 14rpx solid #ff6b35;
+}
+
+@keyframes petBubbleIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8rpx) scale(0.8); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+.pet-bubble-text {
+  font-size: 22rpx;
+  color: #ffffff;
+  font-weight: 600;
 }
 </style>
