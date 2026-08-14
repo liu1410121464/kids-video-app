@@ -137,9 +137,11 @@ module.exports = async function handler(req, res) {
       const currentRound = history.length + 1
       const isLastRound = currentRound >= maxRounds
 
-      const historyText = history.map((h, i) =>
-        `第${i + 1}段：${h.scene}\n当时的选择：${h.choices[choiceIndex] || '（你做了选择）'}`
-      ).join('\n\n')
+      const historyText = history.map((h, i) => {
+        // 兼容两种数据格式
+        const choiceText = h.chosenText || (h.choices && h.choices[choiceIndex]) || '（你做了选择）'
+        return `第${i + 1}段：${h.scene}\n当时的选择：${choiceText}`
+      }).join('\n\n')
 
       const sysMsg = isLastRound
         ? `你是一个互动儿童故事创作AI。请为${age}岁的孩子完成故事的最终结局。
