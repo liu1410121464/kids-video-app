@@ -29,6 +29,30 @@
       </view>
     </view>
 
+    <!-- 我的角色 -->
+    <view class="char-section" v-if="myChar">
+      <view
+        class="char-card"
+        :class="{ 'char-bounce': charAnimating }"
+        @click="interactWithChar"
+      >
+        <view class="char-avatar" :style="{ background: charColor }">
+          <text class="char-emoji">{{ charEmoji }}</text>
+        </view>
+        <view class="char-info">
+          <text class="char-name">{{ myChar.name }}</text>
+          <text class="char-desc">{{ charPersonality }} · {{ charAnimal }}</text>
+        </view>
+        <view class="char-tap-hint">
+          <text class="tap-icon">👆</text>
+        </view>
+        <!-- 互动气泡 -->
+        <view class="char-bubble" v-if="charMessage">
+          <text class="bubble-text">{{ charMessage }}</text>
+        </view>
+      </view>
+    </view>
+
     <!-- 功能卡片网格 -->
     <view class="feature-section">
       <!-- AI 讲故事（主功能） -->
@@ -77,10 +101,10 @@
       <view class="feature-card card-character" @click="goCharacter">
         <view class="card-glare"></view>
         <view class="card-icon-wrap icon-character">
-          <text class="card-emoji">⭐</text>
+          <text class="card-emoji">{{ myChar ? charEmoji : '⭐' }}</text>
         </view>
-        <text class="card-title">我的角色</text>
-        <text class="card-desc">创建专属角色，出现在故事中</text>
+        <text class="card-title">{{ myChar ? myChar.name : '我的角色' }}</text>
+        <text class="card-desc">{{ myChar ? '点击查看角色' : '创建专属角色，出现在故事中' }}</text>
       </view>
     </view>
 
@@ -92,15 +116,63 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { onReady } from '@dcloudio/uni-app'
+import { ref, computed } from 'vue'
+import { onReady, onShow } from '@dcloudio/uni-app'
+import { getMyCharacter, ANIMAL_TYPES, PERSONALITIES, COLOR_THEMES } from '@/config/character.js'
 
 const statusBarHeight = ref(44)
+const myChar = ref(null)
+const charAnimating = ref(false)
+const charMessage = ref('')
+
+const charEmoji = computed(() => {
+  if (!myChar.value) return ''
+  const a = ANIMAL_TYPES.find(x => x.id === myChar.value.animalId)
+  return a ? a.emoji : '🐰'
+})
+const charAnimal = computed(() => {
+  if (!myChar.value) return ''
+  const a = ANIMAL_TYPES.find(x => x.id === myChar.value.animalId)
+  return a ? a.name : ''
+})
+const charPersonality = computed(() => {
+  if (!myChar.value) return ''
+  const p = PERSONALITIES.find(x => x.id === myChar.value.personalityId)
+  return p ? p.name : ''
+})
+const charColor = computed(() => {
+  if (!myChar.value) return '#FF6B35'
+  const c = COLOR_THEMES.find(x => x.id === myChar.value.colorId)
+  return c ? c.color : '#FF6B35'
+})
+
+const charMessages = [
+  '来和我一起玩吧！🎮',
+  '今天想听什么故事呀？📖',
+  '我在这里哦～✨',
+  '嘿嘿，你回来啦！😊',
+  '要不要去冒险？🗺️',
+  '我能画一幅画送给你！🎨',
+]
+
+onShow(() => {
+  myChar.value = getMyCharacter()
+})
 
 onReady(() => {
   const systemInfo = uni.getSystemInfoSync()
   statusBarHeight.value = systemInfo.statusBarHeight || 44
 })
+
+function interactWithChar () {
+  if (charAnimating.value) return
+  charAnimating.value = true
+  charMessage.value = charMessages[Math.floor(Math.random() * charMessages.length)]
+  setTimeout(() => {
+    charMessage.value = ''
+    charAnimating.value = false
+  }, 2500)
+}
 
 function goStory () {
   uni.navigateTo({ url: '/pages/story/story' })
@@ -253,6 +325,135 @@ function goHistory () {
   font-size: 28rpx;
   color: rgba(255, 255, 255, 0.9);
   position: relative;
+}
+
+/* 我的角色 */
+.char-section {
+  padding: 0 30rpx 20rpx;
+}
+
+.char-card {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  background: #ffffff;
+  border-radius: 28rpx;
+  padding: 24rpx 30rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.06);
+  border: 3rpx solid #f0e6d8;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.char-card:active {
+  transform: scale(0.97);
+}
+
+.char-bounce {
+  animation: charBounce 0.5s ease;
+}
+
+@keyframes charBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.char-avatar {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.char-emoji {
+  font-size: 48rpx;
+}
+
+.char-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.char-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #3d3733;
+  display: block;
+}
+
+.char-desc {
+  font-size: 24rpx;
+  color: #8a7a6d;
+  margin-top: 4rpx;
+  display: block;
+}
+
+.char-tap-hint {
+  width: 52rpx;
+  height: 52rpx;
+  background: #fdf6ec;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.tap-icon {
+  font-size: 28rpx;
+}
+
+.char-bubble {
+  position: absolute;
+  top: -40rpx;
+  right: 30rpx;
+  background: #ff6b35;
+  border-radius: 20rpx;
+  padding: 10rpx 20rpx;
+  animation: bubbleIn 0.3s ease-out;
+  z-index: 10;
+}
+
+.char-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -12rpx;
+  right: 30rpx;
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid transparent;
+  border-right: 12rpx solid transparent;
+  border-top: 14rpx solid #ff6b35;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10rpx) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bubble-text {
+  font-size: 24rpx;
+  color: #ffffff;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* 功能卡片 */
