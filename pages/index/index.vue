@@ -144,6 +144,7 @@ function goHistory () {
   align-items: center;
   justify-content: space-between;
   padding: 0 30rpx 20rpx;
+  padding-right: 280rpx;
 }
 
 .nav-logo {
