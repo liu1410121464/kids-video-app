@@ -73,8 +73,8 @@
       </view>
 
       <!-- 生成按钮 -->
-      <view class="generate-btn" @click="handleGenerate">
-        <text class="btn-text">📖 开始讲故事</text>
+      <view class="generate-btn" :class="{ disabled: isLoading }" @click="handleGenerate">
+        <text class="btn-text">{{ isLoading ? '⏳ 生成中...' : '📖 开始讲故事' }}</text>
       </view>
     </view>
 
@@ -87,7 +87,7 @@
           <view class="bubble b3"></view>
           <text class="loading-emoji">📖</text>
         </view>
-        <text class="loading-text">AI 正在创作中...</text>
+        <text class="loading-text">正在生成故事...</text>
         <text class="loading-sub">编故事 + 画插图，需要一点时间哦</text>
       </view>
     </view>
@@ -202,6 +202,7 @@ async function handleGenerate () {
     uni.showToast({ title: '请输入故事关键词', icon: 'none' })
     return
   }
+  if (isLoading.value) return
 
   isLoading.value = true
   errorMessage.value = ''
@@ -257,6 +258,7 @@ function saveStory () {
 }
 
 function retry () {
+  if (isLoading.value) return
   errorMessage.value = ''
   handleGenerate()
 }
@@ -496,6 +498,11 @@ function onImageError () {
   box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.35);
   margin-top: 12rpx;
   transition: all 0.2s;
+}
+
+.generate-btn.disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .generate-btn:active {

@@ -47,8 +47,8 @@
       </view>
 
       <!-- 生成按钮 -->
-      <view class="draw-btn" @click="handleDraw">
-        <text class="btn-text">✨ 开始画画</text>
+      <view class="draw-btn" :class="{ disabled: loading }" @click="handleDraw">
+        <text class="btn-text">{{ loading ? '⏳ 生成中...' : '✨ 开始画画' }}</text>
       </view>
     </view>
 
@@ -62,7 +62,7 @@
           <view class="dot d4"></view>
           <view class="brush">🖌️</view>
         </view>
-        <text class="loading-text">AI 小画家创作中...</text>
+        <text class="loading-text">正在生成画作...</text>
         <text class="loading-sub">把你的想象变成画，需要一点时间哦</text>
       </view>
     </view>
@@ -145,6 +145,7 @@ async function handleDraw () {
     uni.showToast({ title: '先说说你想画什么', icon: 'none' })
     return
   }
+  if (loading.value) return
 
   loading.value = true
   errorMessage.value = ''
@@ -190,6 +191,7 @@ function saveImage () {
 }
 
 function retry () {
+  if (loading.value) return
   errorMessage.value = ''
   handleDraw()
 }
@@ -346,6 +348,11 @@ function onImageError () {
 
 .draw-btn:active {
   transform: scale(0.97);
+}
+
+.draw-btn.disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .btn-text {

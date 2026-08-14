@@ -54,8 +54,8 @@
       </view>
 
       <!-- 开始按钮 -->
-      <view class="start-btn" @click="handleStart">
-        <text class="start-btn-text">🚀 开始冒险</text>
+      <view class="start-btn" :class="{ disabled: loading }" @click="handleStart">
+        <text class="start-btn-text">{{ loading ? '⏳ 生成中...' : '🚀 开始冒险' }}</text>
       </view>
     </view>
 
@@ -113,6 +113,7 @@
           v-for="(choice, i) in currentChoices"
           :key="i"
           class="choice-btn"
+          :class="{ disabled: loading }"
           @click="makeChoice(i)"
         >
           <text class="choice-index">{{ ['A', 'B', 'C'][i] }}</text>
@@ -192,6 +193,7 @@ async function handleStart () {
     uni.showToast({ title: '输入故事关键词', icon: 'none' })
     return
   }
+  if (loading.value) return
   loading.value = true
   try {
     let charData = null
@@ -218,6 +220,7 @@ async function handleStart () {
 }
 
 async function makeChoice (index) {
+  if (loading.value) return
   loading.value = true
   try {
     // 构建角色上下文，保持故事连贯
@@ -445,6 +448,10 @@ function saveStory () {
   text-align: center;
   box-shadow: 0 8rpx 24rpx rgba(123, 79, 224, 0.35);
 }
+.start-btn.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
 .start-btn-text {
   font-size: 32rpx;
   font-weight: bold;
@@ -612,6 +619,10 @@ function saveStory () {
   padding: 24rpx 20rpx;
   margin-bottom: 12rpx;
   transition: all 0.2s;
+}
+.choice-btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 .choice-btn:active {
   transform: scale(0.98);
