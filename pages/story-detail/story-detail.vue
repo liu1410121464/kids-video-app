@@ -38,8 +38,14 @@
 
       <!-- 操作按钮 -->
       <view class="story-actions">
-        <view class="action-btn action-play" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
-          <text class="action-text">{{ isPlaying ? '⏹ 停止' : '🔊 听故事' }}</text>
+        <view
+          class="action-btn action-play"
+          :class="{ 'is-playing': isPlaying }"
+          @click="toggleReadAloud"
+        >
+          <text class="action-text">{{
+            isPlaying ? '⏹ 停止' : '🔊 听故事'
+          }}</text>
         </view>
         <view class="action-btn action-save" @click="saveStory">
           <text class="action-text">❤️ 收藏</text>
@@ -294,8 +300,13 @@ function toggleReadAloud () {
 }
 
 @keyframes pulsePlay {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .action-text {

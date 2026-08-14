@@ -57,35 +57,35 @@
 
     <!-- 功能卡片网格 -->
     <view class="feature-section">
-      <!-- AI 讲故事（主功能） -->
+      <!-- 智能讲故事（主功能） -->
       <view class="feature-card card-story" @click="goStory">
         <view class="card-glare"></view>
         <view class="card-icon-wrap icon-story">
           <text class="card-emoji">📖</text>
         </view>
-        <text class="card-title">AI 讲故事</text>
-        <text class="card-desc">输入关键词，AI 为你创作一个专属故事</text>
+        <text class="card-title">智能讲故事</text>
+        <text class="card-desc">输入关键词，为你创作一个专属故事</text>
         <view class="card-badge">热门</view>
       </view>
 
-      <!-- AI 画画 -->
+      <!-- 智能画画 -->
       <view class="feature-card card-draw" @click="goDraw">
         <view class="card-glare"></view>
         <view class="card-icon-wrap icon-draw">
           <text class="card-emoji">🎨</text>
         </view>
-        <text class="card-title">AI 画画</text>
-        <text class="card-desc">说出你的想法，AI 帮你画出来</text>
+        <text class="card-title">智能画画</text>
+        <text class="card-desc">说出你的想法，帮你画出来</text>
       </view>
 
-      <!-- AI 学习助手 -->
+      <!-- 智能学习助手 -->
       <view class="feature-card card-chat" @click="goChat">
         <view class="card-glare"></view>
         <view class="card-icon-wrap icon-chat">
           <text class="card-emoji">🤖</text>
         </view>
-        <text class="card-title">AI 学习助手</text>
-        <text class="card-desc">有问题就问，AI 什么都知道</text>
+        <text class="card-title">智能学习助手</text>
+        <text class="card-desc">有问题就问，什么都知道</text>
       </view>
 
       <!-- 故事接龙 - 新功能区 -->
@@ -118,7 +118,7 @@
 
     <!-- 底部提示 -->
     <view class="footer-tip">
-      <text class="tip-text">✨ 每天一个 AI 故事，陪伴宝宝快乐成长</text>
+      <text class="tip-text">✨ 每天一个好故事，陪伴宝宝快乐成长</text>
     </view>
 
     <!-- 浮动宠物 -->

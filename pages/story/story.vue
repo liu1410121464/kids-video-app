@@ -6,7 +6,7 @@
         <view class="nav-back" @click="goBack">
           <text class="back-icon">←</text>
         </view>
-        <text class="nav-title">AI 讲故事</text>
+        <text class="nav-title">智能讲故事</text>
         <view class="nav-link" @click="goFavorites">
           <text class="link-icon">❤️</text>
           <text class="link-text">收藏</text>
@@ -17,7 +17,7 @@
     <!-- 输入区域 -->
     <view class="input-section" v-show="!showStory && !isLoading">
       <view class="section-title">
-        <text class="title-text">✨ 告诉 AI 你想听什么故事</text>
+        <text class="title-text">✨ 告诉小助手你想听什么故事</text>
       </view>
 
       <!-- 关键词输入 -->
@@ -35,7 +35,9 @@
             <text class="random-icon">🎲</text>
           </view>
         </view>
-        <text class="input-hint">输入 2-4 个关键词，AI 会围绕它们编故事</text>
+        <text class="input-hint"
+          >输入 2-4 个关键词，小助手会围绕它们编故事</text
+        >
       </view>
 
       <!-- 年龄选择 -->
@@ -142,8 +144,14 @@
         <view class="action-btn action-retry" @click="resetStory">
           <text class="action-text">🔄 换一个</text>
         </view>
-        <view class="action-btn action-play" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
-          <text class="action-text">{{ isPlaying ? '⏹ 停止' : '🔊 听故事' }}</text>
+        <view
+          class="action-btn action-play"
+          :class="{ 'is-playing': isPlaying }"
+          @click="toggleReadAloud"
+        >
+          <text class="action-text">{{
+            isPlaying ? '⏹ 停止' : '🔊 听故事'
+          }}</text>
         </view>
         <view class="action-btn action-save" @click="saveStory">
           <text class="action-text">💾 保存</text>
@@ -839,8 +847,13 @@ function previewImage () {
 }
 
 @keyframes pulsePlay {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .action-text {

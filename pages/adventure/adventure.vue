@@ -110,7 +110,11 @@
       </view>
 
       <!-- 朗读按钮 -->
-      <view class="read-aloud-btn" :class="{ 'is-playing': isPlaying }" @click="toggleReadAloud">
+      <view
+        class="read-aloud-btn"
+        :class="{ 'is-playing': isPlaying }"
+        @click="toggleReadAloud"
+      >
         <text class="ra-icon">{{ isPlaying ? '⏹' : '🔊' }}</text>
         <text class="ra-text">{{ isPlaying ? '停止' : '朗读故事' }}</text>
       </view>
@@ -652,8 +656,13 @@ function saveStory () {
 }
 
 @keyframes pulsePlay {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .ra-icon {

@@ -15,8 +15,11 @@ let isPaused = false
 /**
  * 检测是否支持语音合成
  */
-export function isTTSSupported () {
-  return typeof window !== 'undefined' && typeof window.speechSynthesis !== 'undefined'
+export function isTTSSupported() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.speechSynthesis !== 'undefined'
+  )
 }
 
 /**
@@ -32,13 +35,13 @@ export function isTTSSupported () {
  * @param {function} options.onError - 错误回调
  * @returns {boolean} 是否成功启动朗读
  */
-export function speak (text, options = {}) {
+export function speak(text, options = {}) {
   if (!text || !isTTSSupported()) {
     // 不支持时，复制到剪贴板并提示
     try {
       uni.setClipboardData({
         data: text,
-        showToast: false
+        showToast: false,
       })
       uni.showToast({ title: '已复制到剪贴板', icon: 'none' })
     } catch (e) {
@@ -57,7 +60,7 @@ export function speak (text, options = {}) {
     lang = 'zh-CN',
     onStart,
     onEnd,
-    onError
+    onError,
   } = options
 
   utterance = new SpeechSynthesisUtterance(text)
@@ -68,7 +71,7 @@ export function speak (text, options = {}) {
 
   // 尝试选择中文语音
   const voices = window.speechSynthesis.getVoices()
-  const zhVoice = voices.find(v => v.lang.startsWith('zh'))
+  const zhVoice = voices.find((v) => v.lang.startsWith('zh'))
   if (zhVoice) utterance.voice = zhVoice
 
   utterance.onstart = () => {
@@ -98,7 +101,7 @@ export function speak (text, options = {}) {
 /**
  * 暂停朗读
  */
-export function pause () {
+export function pause() {
   if (isSpeaking && !isPaused && window.speechSynthesis) {
     window.speechSynthesis.pause()
     isPaused = true
@@ -108,7 +111,7 @@ export function pause () {
 /**
  * 继续朗读
  */
-export function resume () {
+export function resume() {
   if (isSpeaking && isPaused && window.speechSynthesis) {
     window.speechSynthesis.resume()
     isPaused = false
@@ -118,7 +121,7 @@ export function resume () {
 /**
  * 停止朗读
  */
-export function stop () {
+export function stop() {
   if (window.speechSynthesis) {
     window.speechSynthesis.cancel()
   }
@@ -131,7 +134,7 @@ export function stop () {
  * 获取当前朗读状态
  * @returns {{ isSpeaking: boolean, isPaused: boolean }}
  */
-export function getStatus () {
+export function getStatus() {
   return { isSpeaking, isPaused }
 }
 
@@ -141,10 +144,10 @@ export function getStatus () {
  * @param {string} text
  * @param {function} onEnd
  */
-export function readAloud (text, onEnd) {
+export function readAloud(text, onEnd) {
   return speak(text, {
     rate: 1.2,
     pitch: 1.1,
-    onEnd
+    onEnd,
   })
 }

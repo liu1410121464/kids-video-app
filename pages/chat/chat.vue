@@ -6,7 +6,7 @@
         <view class="nav-back" @click="goBack">
           <text class="back-icon">←</text>
         </view>
-        <text class="nav-title">AI 学习助手</text>
+        <text class="nav-title">智能学习助手</text>
         <view class="nav-placeholder"></view>
       </view>
     </view>
