@@ -71,11 +71,12 @@ export function startAdventure(
  * @param {number} choiceIndex - 玩家选择的选项索引
  * @returns {Promise<{scene, choices, round, finished}>}
  */
-export function continueAdventure(history, choiceIndex) {
+export function continueAdventure(history, choiceIndex, character = null) {
   return request('/api/adventure', {
     action: 'choose',
     history,
     choiceIndex,
+    character,
   })
 }
 

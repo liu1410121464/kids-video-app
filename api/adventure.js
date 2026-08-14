@@ -160,24 +160,26 @@ module.exports = async function handler(req, res) {
       const sysMsg = isLastRound
         ? `你是一个互动儿童故事创作AI，请为${age}岁的孩子完成故事的最终结局。
 要求：
-1. 故事要${ageHint}
-2. 语言生动有趣，多用拟声词和比喻
-3. ${charDesc}
-4. 这是最后一轮，请给出一个温暖、积极、圆满的结局
-5. 严格按以下格式输出 JSON，不要输出任何其他内容：
+1. 必须严格延续已有故事的情节和角色设定
+2. 故事要${ageHint}
+3. 语言生动有趣，多用拟声词和比喻
+4. ${charDesc}
+5. 这是最后一轮，请给出一个温暖、积极、圆满的结局
+6. 严格按以下格式输出 JSON，不要输出任何其他内容：
 {"scene":"故事结局（150-250字）"}`
         : `你是一个互动儿童故事创作AI，请为${age}岁的孩子继续这个故事。
 要求：
-1. 故事要${ageHint}
-2. 语言生动有趣，多用拟声词和比喻
-3. ${charDesc}
-4. 故事要有悬念，最后停留在关键时刻
-5. 严格按以下格式输出 JSON，不要输出任何其他内容：
+1. 必须严格延续已有故事的情节和角色设定，绝不可另起炉灶
+2. 故事要${ageHint}
+3. 语言生动有趣，多用拟声词和比喻
+4. ${charDesc}
+5. 故事要有悬念，最后停留在关键时刻
+6. 严格按以下格式输出 JSON，不要输出任何其他内容：
 {"scene":"故事正文（100-150字）","choices":["选项A（20字以内）","选项B（20字以内）","选项C（20字以内）"]}`
 
       const messages = [
         { role: 'system', content: sysMsg },
-        { role: 'user', content: `这是之前的故事：\n${historyText}\n\n孩子选择了第${choiceIndex + 1}个选项，请继续故事。` },
+        { role: 'user', content: `这是完整的故事历史，你必须严格延续这个故事，保持角色和情节一致：\n${historyText}\n\n孩子选择了第${choiceIndex + 1}个选项，请延续这段冒险。` },
       ]
 
       const aiRes = await generateText(messages)
