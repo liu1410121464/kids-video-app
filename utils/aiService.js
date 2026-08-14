@@ -43,6 +43,38 @@ export function chatAssistant(message, age = 6) {
 }
 
 /**
+ * 开始故事接龙
+ * @param {string} keywords - 故事关键词
+ * @param {number} age - 年龄
+ * @param {string} style - 风格
+ * @param {object|null} character - 专属角色 {name, animal, personality}
+ * @returns {Promise<{scene, choices, round, maxRounds, finished}>}
+ */
+export function startAdventure(keywords, age = 5, style = '温馨有趣', character = null) {
+  return request('/api/adventure', {
+    action: 'start',
+    keywords,
+    age,
+    style,
+    character,
+  })
+}
+
+/**
+ * 继续故事接龙
+ * @param {Array} history - 故事历史 [{scene, chosenText}]
+ * @param {number} choiceIndex - 玩家选择的选项索引
+ * @returns {Promise<{scene, choices, round, finished}>}
+ */
+export function continueAdventure(history, choiceIndex) {
+  return request('/api/adventure', {
+    action: 'choose',
+    history,
+    choiceIndex,
+  })
+}
+
+/**
  * 统一请求封装
  */
 function request(url, data) {

@@ -61,6 +61,27 @@
         <text class="card-title">AI 学习助手</text>
         <text class="card-desc">有问题就问，AI 什么都知道</text>
       </view>
+
+      <!-- 故事接龙 - 新功能区 -->
+      <view class="feature-card card-adventure" @click="goAdventure">
+        <view class="card-glare"></view>
+        <view class="card-icon-wrap icon-adventure">
+          <text class="card-emoji">🎭</text>
+        </view>
+        <text class="card-title">故事接龙</text>
+        <text class="card-desc">你来选剧情，每次不同结局</text>
+        <view class="card-badge card-badge-new">NEW</view>
+      </view>
+
+      <!-- 创建角色 -->
+      <view class="feature-card card-character" @click="goCharacter">
+        <view class="card-glare"></view>
+        <view class="card-icon-wrap icon-character">
+          <text class="card-emoji">⭐</text>
+        </view>
+        <text class="card-title">我的角色</text>
+        <text class="card-desc">创建专属角色，出现在故事中</text>
+      </view>
     </view>
 
     <!-- 底部提示 -->
@@ -91,6 +112,14 @@ function goDraw () {
 
 function goChat () {
   uni.navigateTo({ url: '/pages/chat/chat' })
+}
+
+function goAdventure () {
+  uni.navigateTo({ url: '/pages/adventure/adventure' })
+}
+
+function goCharacter () {
+  uni.navigateTo({ url: '/pages/character/character' })
 }
 
 function goHistory () {

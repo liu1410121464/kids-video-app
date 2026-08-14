@@ -47,6 +47,22 @@
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/character/character",
+      "style": {
+        "navigationBarTitleText": "创建角色",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/adventure/adventure",
+      "style": {
+        "navigationBarTitleText": "故事接龙",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {

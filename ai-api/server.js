@@ -21,10 +21,13 @@ app.use(express.json())
 app.post('/api/story', require('../api/story'))
 app.post('/api/draw', require('../api/draw'))
 app.post('/api/chat', require('../api/chat'))
+app.post('/api/adventure', require('../api/adventure'))
 
 app.listen(PORT, () => {
   console.log(`🚀 AI API 服务已启动: http://localhost:${PORT}`)
   console.log(`📖 讲故事接口: POST http://localhost:${PORT}/api/story`)
   console.log(`🎨 画画接口: POST http://localhost:${PORT}/api/draw`)
   console.log(`🤖 学习助手接口: POST http://localhost:${PORT}/api/chat`)
+  console.log(`🎭 故事接龙接口: POST http://localhost:${PORT}/api/adventure`)
+  console.log(`🎭 故事接龙接口: POST http://localhost:${PORT}/api/adventure`)
 })
