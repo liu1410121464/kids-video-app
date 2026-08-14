@@ -15,13 +15,45 @@
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/draw/draw",
+      "style": {
+        "navigationBarTitleText": "AI 画画",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/chat/chat",
+      "style": {
+        "navigationBarTitleText": "AI 学习助手",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/favorites/favorites",
+      "style": {
+        "navigationBarTitleText": "我的故事",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/story-detail/story-detail",
+      "style": {
+        "navigationBarTitleText": "故事详情",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "宝宝大课堂",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#FFF8F0",
+    "backgroundColor": "#FDF6EC",
     "backgroundTextStyle": "dark"
   },
   "tabBar": null

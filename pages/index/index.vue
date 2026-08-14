@@ -4,8 +4,16 @@
     <view class="nav-bar" :style="{ paddingTop: statusBarHeight + 'px' }">
       <view class="nav-content">
         <view class="nav-logo">
-          <text class="logo-emoji">🐣</text>
+          <view class="logo-icon">
+            <text class="logo-emoji">🐣</text>
+          </view>
           <text class="logo-text">宝宝大课堂</text>
+        </view>
+        <view class="nav-right">
+          <view class="history-btn" @click="goHistory">
+            <text class="history-icon">🕐</text>
+            <text class="history-text">历史</text>
+          </view>
         </view>
       </view>
     </view>
@@ -13,38 +21,45 @@
     <!-- 欢迎区域 -->
     <view class="welcome-section">
       <view class="welcome-card">
+        <view class="welcome-bubble bubble-1"></view>
+        <view class="welcome-bubble bubble-2"></view>
+        <view class="welcome-bubble bubble-3"></view>
         <text class="welcome-title">👋 嗨，小朋友！</text>
-        <text class="welcome-subtitle">今天想玩什么呢？</text>
+        <text class="welcome-subtitle">今天想玩点什么呀？</text>
       </view>
     </view>
 
-    <!-- 功能卡片 -->
+    <!-- 功能卡片网格 -->
     <view class="feature-section">
-      <view class="feature-card feature-main" @click="goStory">
-        <view class="feature-icon">📖</view>
-        <view class="feature-info">
-          <text class="feature-title">AI 讲故事</text>
-          <text class="feature-desc">输入关键词，AI 为你讲一个精彩的故事</text>
+      <!-- AI 讲故事（主功能） -->
+      <view class="feature-card card-story" @click="goStory">
+        <view class="card-glare"></view>
+        <view class="card-icon-wrap icon-story">
+          <text class="card-emoji">📖</text>
         </view>
-        <view class="feature-arrow">→</view>
+        <text class="card-title">AI 讲故事</text>
+        <text class="card-desc">输入关键词，AI 为你创作一个专属故事</text>
+        <view class="card-badge">热门</view>
       </view>
 
-      <view class="feature-card feature-coming">
-        <view class="feature-icon">🎨</view>
-        <view class="feature-info">
-          <text class="feature-title">AI 画画</text>
-          <text class="feature-desc">说出你想画的，AI 帮你画出来</text>
+      <!-- AI 画画 -->
+      <view class="feature-card card-draw" @click="goDraw">
+        <view class="card-glare"></view>
+        <view class="card-icon-wrap icon-draw">
+          <text class="card-emoji">🎨</text>
         </view>
-        <view class="coming-badge">即将上线</view>
+        <text class="card-title">AI 画画</text>
+        <text class="card-desc">说出你的想法，AI 帮你画出来</text>
       </view>
 
-      <view class="feature-card feature-coming">
-        <view class="feature-icon">🤖</view>
-        <view class="feature-info">
-          <text class="feature-title">AI 学习助手</text>
-          <text class="feature-desc">有问题就问 AI，它什么都知道</text>
+      <!-- AI 学习助手 -->
+      <view class="feature-card card-chat" @click="goChat">
+        <view class="card-glare"></view>
+        <view class="card-icon-wrap icon-chat">
+          <text class="card-emoji">🤖</text>
         </view>
-        <view class="coming-badge">即将上线</view>
+        <text class="card-title">AI 学习助手</text>
+        <text class="card-desc">有问题就问，AI 什么都知道</text>
       </view>
     </view>
 
@@ -67,16 +82,26 @@ onReady(() => {
 })
 
 function goStory () {
-  uni.navigateTo({
-    url: '/pages/story/story'
-  })
+  uni.navigateTo({ url: '/pages/story/story' })
+}
+
+function goDraw () {
+  uni.navigateTo({ url: '/pages/draw/draw' })
+}
+
+function goChat () {
+  uni.navigateTo({ url: '/pages/chat/chat' })
+}
+
+function goHistory () {
+  uni.navigateTo({ url: '/pages/favorites/favorites?tab=history' })
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
   min-height: 100vh;
-  background: linear-gradient(180deg, #fff8f0 0%, #fff0e6 100%);
+  background: linear-gradient(180deg, #fdf6ec 0%, #f7e8dc 100%);
   padding-bottom: 40rpx;
 }
 
@@ -88,129 +113,223 @@ function goStory () {
 .nav-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0 30rpx 20rpx;
 }
 
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12rpx;
+  gap: 14rpx;
+}
+
+.logo-icon {
+  width: 72rpx;
+  height: 72rpx;
+  background: linear-gradient(135deg, #ffd166, #ff9e5e);
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(255, 158, 94, 0.35);
 }
 
 .logo-emoji {
-  font-size: 48rpx;
+  font-size: 40rpx;
 }
 
 .logo-text {
-  font-size: 40rpx;
+  font-size: 38rpx;
   font-weight: bold;
   color: #ff6b35;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.history-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 12rpx 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.history-icon {
+  font-size: 26rpx;
+}
+
+.history-text {
+  font-size: 24rpx;
+  color: #7a6a5d;
+  font-weight: 600;
+}
+
 /* 欢迎区域 */
 .welcome-section {
-  padding: 20rpx 30rpx 30rpx;
+  padding: 10rpx 30rpx 30rpx;
 }
 
 .welcome-card {
-  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-  border-radius: 24rpx;
-  padding: 36rpx 40rpx;
-  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.3);
+  background: linear-gradient(135deg, #ff9e5e 0%, #ff6b35 100%);
+  border-radius: 32rpx;
+  padding: 44rpx 40rpx;
+  box-shadow: 0 12rpx 30rpx rgba(255, 107, 53, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.bubble-1 {
+  width: 160rpx;
+  height: 160rpx;
+  right: -30rpx;
+  top: -40rpx;
+}
+
+.bubble-2 {
+  width: 80rpx;
+  height: 80rpx;
+  right: 100rpx;
+  bottom: -20rpx;
+}
+
+.bubble-3 {
+  width: 40rpx;
+  height: 40rpx;
+  left: 200rpx;
+  top: 20rpx;
 }
 
 .welcome-title {
-  font-size: 40rpx;
+  font-size: 42rpx;
   font-weight: bold;
   color: #ffffff;
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
+  position: relative;
 }
 
 .welcome-subtitle {
   font-size: 28rpx;
   color: rgba(255, 255, 255, 0.9);
+  position: relative;
 }
 
-/* 功能区域 */
+/* 功能卡片 */
 .feature-section {
   padding: 0 30rpx;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20rpx;
 }
 
 .feature-card {
-  background: #ffffff;
-  border-radius: 24rpx;
-  padding: 32rpx 30rpx;
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  border-radius: 28rpx;
+  padding: 32rpx 28rpx;
   position: relative;
-  transition: transform 0.2s;
+  overflow: hidden;
+  transition: all 0.25s;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.08);
 }
 
 .feature-card:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
-.feature-main {
-  border: 3rpx solid #ff6b35;
-  background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);
+.card-glare {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120rpx;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 0 100%;
 }
 
-.feature-coming {
-  opacity: 0.7;
+/* 讲故事卡片（大卡片，占整行） */
+.card-story {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #fff9f0 0%, #fff0e2 100%);
+  border: 3rpx solid #ff9e5e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 44rpx 40rpx;
 }
 
-.feature-icon {
-  font-size: 60rpx;
-  width: 100rpx;
-  height: 100rpx;
+.card-draw {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e4f1ff 100%);
+  border: 3rpx solid #5b9dff;
+}
+
+.card-chat {
+  background: linear-gradient(135deg, #f8f4ff 0%, #efe7fb 100%);
+  border: 3rpx solid #9b6dff;
+}
+
+.card-icon-wrap {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff0e6;
-  border-radius: 50%;
-  flex-shrink: 0;
+  margin-bottom: 20rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.08);
 }
 
-.feature-info {
-  flex: 1;
+.icon-story {
+  background: linear-gradient(135deg, #ffd166, #ff9e5e);
 }
 
-.feature-title {
+.icon-draw {
+  background: linear-gradient(135deg, #8fc1ff, #5b9dff);
+}
+
+.icon-chat {
+  background: linear-gradient(135deg, #b89bff, #9b6dff);
+}
+
+.card-emoji {
+  font-size: 64rpx;
+}
+
+.card-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #333333;
+  color: #3d3733;
   display: block;
-  margin-bottom: 6rpx;
+  text-align: center;
 }
 
-.feature-desc {
-  font-size: 24rpx;
-  color: #999999;
+.card-desc {
+  font-size: 23rpx;
+  color: #8a7a6d;
+  margin-top: 8rpx;
+  text-align: center;
   line-height: 1.5;
 }
 
-.feature-arrow {
-  font-size: 40rpx;
-  color: #ff6b35;
-  font-weight: bold;
-}
-
-.coming-badge {
+.card-badge {
   position: absolute;
-  top: 16rpx;
-  right: 16rpx;
-  background: #f0f0f0;
-  color: #999999;
+  top: 20rpx;
+  right: 20rpx;
+  background: linear-gradient(135deg, #ff6b35, #ff9e5e);
+  color: #ffffff;
   font-size: 20rpx;
-  padding: 4rpx 12rpx;
-  border-radius: 10rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: bold;
 }
 
 /* 底部提示 */
@@ -221,6 +340,6 @@ function goStory () {
 
 .tip-text {
   font-size: 24rpx;
-  color: #cccccc;
+  color: #c0b2a4;
 }
 </style>

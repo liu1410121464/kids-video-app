@@ -117,11 +117,12 @@ module.exports = async function handler(req, res) {
         content: `你是一个专业的儿童故事作家。请为${age}岁的孩子写一个${style}的故事。
 要求：
 1. 故事要${ageHint}
-2. 字数控制在 300-500 字之间
+2. 字数控制在 350-500 字之间
 3. 故事要有开头、发展、结尾，结构完整
 4. 语言生动有趣，多用拟声词和比喻
 5. 结尾要有积极正面的寓意
-6. 只输出故事正文，不要输出标题或其他说明`,
+6. 直接输出故事正文，第一行用【】写一个简短有趣的故事标题，例如【月亮上的小兔子】，然后换行开始正文
+7. 严禁输出"世界观设定"、"角色设定"、"故事梗概"、"教育寓意"等额外说明，只输出标题和正文`,
       },
       {
         role: 'user',
@@ -130,12 +131,36 @@ module.exports = async function handler(req, res) {
     ]
 
     const storyRes = await generateText(storyMessages)
-    const storyText = storyRes?.choices?.[0]?.message?.content || ''
+    let storyText = storyRes?.choices?.[0]?.message?.content || ''
 
     if (!storyText) {
       console.error('故事生成返回为空:', JSON.stringify(storyRes))
       return res.json({ code: -1, message: '故事生成失败，请稍后重试' })
     }
+
+    // 提取故事标题（第一行【】内的内容）
+    const titleMatch = storyText.match(/【([^】]+)】/)
+    let storyTitle = '今天的故事'
+    if (titleMatch && titleMatch[1]) {
+      storyTitle = titleMatch[1]
+      // 移除标题行
+      storyText = storyText.replace(/^.{0,5}【[^】]+】\s*\n?/, '')
+    }
+    // 清理多余结构说明
+    storyText = storyText
+      .replace(
+        /【世界观设定】【角色设定】【故事梗概】【教育寓意】[\s\S]*?(?=\n\n|\n正文|$)/,
+        '\n',
+      )
+      .split('\n')
+      .filter(
+        (line) =>
+          !/^【(世界观设定|角色设定|故事梗概|教育寓意|正文)】/.test(
+            line.trim(),
+          ),
+      )
+      .join('\n')
+      .trim()
 
     // Step 2: 生成配图（异步，不阻塞返回）
     let imageUrl = null
@@ -153,6 +178,7 @@ module.exports = async function handler(req, res) {
     res.json({
       code: 0,
       data: {
+        title: storyTitle,
         story: storyText,
         image: imageUrl,
         keywords: keywords,
