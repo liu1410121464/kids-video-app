@@ -74,7 +74,7 @@
           <view class="page-turn p2"></view>
         </view>
         <text class="loading-text">故事正在展开...</text>
-        <text class="loading-sub">你的选择会改变故事的走向</text>
+        <text class="loading-sub">分支正在生成，接下来会打开一段新的冒险</text>
       </view>
     </view>
 
@@ -224,14 +224,20 @@ async function handleStart () {
       }
     }
     const result = await startAdventure(keywords.value.trim(), 5, '温馨有趣', charData)
+
+    if (!result || !result.scene) {
+      throw new Error('故事启动失败，请稍后重试')
+    }
+
     storyHistory.value = [{ scene: result.scene, chosenText: '' }]
-    currentChoices.value = result.choices
-    currentRound.value = result.round
-    maxRounds.value = result.maxRounds
-    finished.value = result.finished
+    currentChoices.value = result.choices || []
+    currentRound.value = result.round || 1
+    maxRounds.value = result.maxRounds || 5
+    finished.value = !!result.finished
     started.value = true
   } catch (err) {
     uni.showToast({ title: err.message || '启动失败', icon: 'none' })
+    started.value = false
   } finally {
     loading.value = false
   }

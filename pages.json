@@ -11,7 +11,7 @@
     {
       "path": "pages/story/story",
       "style": {
-        "navigationBarTitleText": "智能讲故事",
+        "navigationBarTitleText": "故事馆",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
@@ -19,7 +19,7 @@
     {
       "path": "pages/draw/draw",
       "style": {
-        "navigationBarTitleText": "智能画画",
+        "navigationBarTitleText": "创意画廊",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }
@@ -27,7 +27,7 @@
     {
       "path": "pages/chat/chat",
       "style": {
-        "navigationBarTitleText": "智能学习助手",
+        "navigationBarTitleText": "十万个为什么",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "black"
       }

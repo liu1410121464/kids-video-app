@@ -1,16 +1,16 @@
 /**
  * AI 服务封装
  *
- * 小程序端统一调用 AI API 的入口
- *
- * 部署说明：
- * 1. 将 api/ 目录部署到 Vercel
- * 2. 在下方 API_BASE 填入你的 Vercel 域名
- * 3. 本地开发时可改为 http://localhost:3000
+ * 方案：前端只调用微信云函数，API Key 保存在云函数环境变量中，
+ * 不暴露到小程序前端。
  */
 
-// ⚠️ 已部署到 Vercel，本地开发时可改为 http://localhost:3000
-const API_BASE = 'https://kids-video-app.vercel.app'
+const CLOUD_FUNCTIONS = {
+  story: 'story',
+  draw: 'draw',
+  chat: 'chat',
+  adventure: 'adventure',
+}
 
 /**
  * 生成 AI 故事
@@ -20,7 +20,7 @@ const API_BASE = 'https://kids-video-app.vercel.app'
  * @returns {Promise<{title, story, image, keywords}>}
  */
 export function generateStory(keywords, age = 5, style = '温馨有趣') {
-  return request('/api/story', { keywords, age, style })
+  return callCloudFunction(CLOUD_FUNCTIONS.story, { keywords, age, style })
 }
 
 /**
@@ -29,7 +29,7 @@ export function generateStory(keywords, age = 5, style = '温馨有趣') {
  * @returns {Promise<{image, prompt}>}
  */
 export function generateDraw(prompt) {
-  return request('/api/draw', { prompt })
+  return callCloudFunction(CLOUD_FUNCTIONS.draw, { prompt })
 }
 
 /**
@@ -39,7 +39,7 @@ export function generateDraw(prompt) {
  * @returns {Promise<{reply}>}
  */
 export function chatAssistant(message, age = 6) {
-  return request('/api/chat', { message, age })
+  return callCloudFunction(CLOUD_FUNCTIONS.chat, { message, age })
 }
 
 /**
@@ -56,7 +56,7 @@ export function startAdventure(
   style = '温馨有趣',
   character = null,
 ) {
-  return request('/api/adventure', {
+  return callCloudFunction(CLOUD_FUNCTIONS.adventure, {
     action: 'start',
     keywords,
     age,
@@ -72,7 +72,7 @@ export function startAdventure(
  * @returns {Promise<{scene, choices, round, finished}>}
  */
 export function continueAdventure(history, choiceIndex, character = null) {
-  return request('/api/adventure', {
+  return callCloudFunction(CLOUD_FUNCTIONS.adventure, {
     action: 'choose',
     history,
     choiceIndex,
@@ -81,25 +81,70 @@ export function continueAdventure(history, choiceIndex, character = null) {
 }
 
 /**
- * 统一请求封装
+ * 通用云函数调用封装
+ */
+function callCloudFunction(name, data) {
+  const timeoutMs = 9000
+
+  return new Promise((resolve, reject) => {
+    let finished = false
+
+    const finish = (handler) => {
+      if (finished) return
+      finished = true
+      clearTimeout(timeoutId)
+      handler()
+    }
+
+    const timeoutId = setTimeout(() => {
+      finish(() => {
+        reject(new Error('AI 生成超时，请稍后再试'))
+      })
+    }, timeoutMs)
+
+    if (!wx || !wx.cloud) {
+      finish(() => {
+        reject(new Error('当前环境未启用微信云开发'))
+      })
+      return
+    }
+
+    wx.cloud.callFunction({
+      name,
+      data,
+      success: (res) => {
+        finish(() => {
+          const result = res.result || {}
+          if (result.code === 0) {
+            resolve(result.data)
+          } else {
+            reject(new Error(result.message || '请求失败'))
+          }
+        })
+      },
+      fail: (err) => {
+        finish(() => {
+          reject(
+            new Error(
+              err && err.message ? err.message : '云函数调用失败，请稍后重试',
+            ),
+          )
+        })
+      },
+    })
+  })
+}
+
+/**
+ * 兼容旧逻辑：保留 request 入口，便于其他页面继续调用。
  */
 function request(url, data) {
   return new Promise((resolve, reject) => {
-    uni.request({
-      url: `${API_BASE}${url}`,
-      method: 'POST',
-      data,
-      success: (res) => {
-        if (res.data.code === 0) {
-          resolve(res.data.data)
-        } else {
-          reject(new Error(res.data.message || '请求失败'))
-        }
-      },
-      fail: (err) => {
-        reject(new Error('网络请求失败，请检查网络连接'))
-      },
-    })
+    reject(
+      new Error(
+        '此版本已改为微信云函数模式，请使用 chatAssistant 等云函数封装',
+      ),
+    )
   })
 }
 
@@ -107,5 +152,5 @@ function request(url, data) {
  * 获取 API 基础地址（供其他模块使用）
  */
 export function getApiBase() {
-  return API_BASE
+  return 'wx-cloud-function'
 }

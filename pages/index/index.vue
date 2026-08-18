@@ -63,7 +63,7 @@
         <view class="card-icon-wrap icon-story">
           <text class="card-emoji">📖</text>
         </view>
-        <text class="card-title">智能讲故事</text>
+        <text class="card-title">故事馆</text>
         <text class="card-desc">输入关键词，为你创作一个专属故事</text>
         <view class="card-badge">热门</view>
       </view>
@@ -74,7 +74,7 @@
         <view class="card-icon-wrap icon-draw">
           <text class="card-emoji">🎨</text>
         </view>
-        <text class="card-title">智能画画</text>
+        <text class="card-title">创意画廊</text>
         <text class="card-desc">说出你的想法，帮你画出来</text>
       </view>
 
@@ -84,7 +84,7 @@
         <view class="card-icon-wrap icon-chat">
           <text class="card-emoji">🤖</text>
         </view>
-        <text class="card-title">智能学习助手</text>
+        <text class="card-title">十万个为什么</text>
         <text class="card-desc">有问题就问，什么都知道</text>
       </view>
 

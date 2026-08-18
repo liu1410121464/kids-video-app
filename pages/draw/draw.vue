@@ -55,7 +55,7 @@
     </view>
 
     <!-- 加载动画 -->
-    <view class="loading-section" v-show="loading">
+    <view class="loading-section" v-if="loading">
       <view class="loading-card">
         <view class="palette">
           <view class="dot d1"></view>
@@ -65,7 +65,7 @@
           <view class="brush">🖌️</view>
         </view>
         <text class="loading-text">正在生成画作...</text>
-        <text class="loading-sub">把你的想象变成画，需要一点时间哦</text>
+        <text class="loading-sub">画笔正在上色，灵感很快就会变成一张画</text>
       </view>
     </view>
 
@@ -157,10 +157,16 @@ async function handleDraw () {
 
   try {
     const result = await generateDraw(prompt.value.trim())
+
+    if (!result || !result.image) {
+      throw new Error('图片生成失败，请稍后重试')
+    }
+
     imageUrl.value = result.image
     showImage.value = true
   } catch (err) {
     errorMessage.value = err.message || '生成失败，请稍后重试'
+    showImage.value = false
   } finally {
     loading.value = false
   }
@@ -385,14 +391,29 @@ function previewImage () {
 
 .loading-card {
   width: 100%;
-  background: #ffffff;
+  background: linear-gradient(135deg, #faf5ff, #ffffff 55%, #f3f9ff);
   border-radius: 30rpx;
   padding: 80rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
-  border: 2rpx solid #e0edfb;
+  box-shadow: 0 12rpx 30rpx rgba(145, 114, 255, 0.12);
+  border: 2rpx solid #e9d8ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(145, 114, 255, 0.08) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s linear infinite;
 }
 
 .palette {

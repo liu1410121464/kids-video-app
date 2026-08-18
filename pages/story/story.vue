@@ -6,7 +6,7 @@
         <view class="nav-back" @click="goBack">
           <text class="back-icon">←</text>
         </view>
-        <text class="nav-title">智能讲故事</text>
+        <text class="nav-title">故事馆</text>
         <view class="nav-link" @click="goFavorites">
           <text class="link-icon">❤️</text>
           <text class="link-text">收藏</text>
@@ -87,7 +87,7 @@
     </view>
 
     <!-- 加载动画 -->
-    <view class="loading-section" v-show="isLoading">
+    <view class="loading-section" v-if="isLoading">
       <view class="loading-card">
         <view class="loading-animation">
           <view class="bubble b1"></view>
@@ -96,7 +96,9 @@
           <text class="loading-emoji">📖</text>
         </view>
         <text class="loading-text">正在生成故事...</text>
-        <text class="loading-sub">编故事 + 画插图，需要一点时间哦</text>
+        <text class="loading-sub"
+          >小助手正在想剧情和细节，马上给你讲好听的故事</text
+        >
       </view>
     </view>
 
@@ -223,6 +225,10 @@ function getStyleName (id) {
   return style ? style.name : '温馨有趣'
 }
 
+function clearLoadingState () {
+  isLoading.value = false
+}
+
 async function handleGenerate () {
   if (!keywords.value.trim()) {
     uni.showToast({ title: '请输入故事关键词', icon: 'none' })
@@ -239,14 +245,19 @@ async function handleGenerate () {
       selectedAge.value,
       getStyleName(selectedStyle.value)
     )
+
+    if (!result || !result.story || !result.title) {
+      throw new Error('故事生成失败，请稍后重试')
+    }
+
     storyData.value = result
-    // 记录历史
     addHistory(result)
     showStory.value = true
   } catch (err) {
     errorMessage.value = err.message || '生成失败，请稍后重试'
+    showStory.value = false
   } finally {
-    isLoading.value = false
+    clearLoadingState()
   }
 }
 
@@ -576,14 +587,38 @@ function previewImage () {
 
 .loading-card {
   width: 100%;
-  background: #ffffff;
+  background: linear-gradient(135deg, #fffaf5 0%, #ffffff 100%);
   border-radius: 30rpx;
   padding: 80rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.06);
-  border: 2rpx solid #f5e8da;
+  box-shadow: 0 12rpx 30rpx rgba(255, 158, 94, 0.12);
+  border: 2rpx solid #ffe3c9;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 158, 94, 0.08) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .loading-animation {
